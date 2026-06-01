@@ -10,6 +10,20 @@
     @* Alpine-AJAX plugin must load BEFORE Alpine core. Both deferred. *@
     <script defer src="https://cdn.jsdelivr.net/npm/@@imacrayon/alpine-ajax@@0.12.x/dist/cdn.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@@3.x.x/dist/cdn.min.js"></script>
+
+    @* Alpine-AJAX auto-adds aria-busy="true" to every target while a request
+       is in flight, and disables submit buttons. This is the only styling
+       hook we need for a loading state. *@
+    <style>
+        [aria-busy] { position: relative; opacity: .6; transition: opacity .15s; }
+        [aria-busy]::after {
+            content: ''; position: absolute; top: 50%; left: 50%;
+            width: 20px; height: 20px; margin: -10px 0 0 -10px;
+            border: 2px solid rgba(0,0,0,.15); border-top-color: rgba(0,0,0,.55);
+            border-radius: 50%; animation: spin .6s linear infinite;
+        }
+        @@keyframes spin { to { transform: rotate(360deg); } }
+    </style>
 </head>
 <body class="h-full bg-slate-50 text-slate-800">
     <header class="border-b border-slate-200 bg-white">
