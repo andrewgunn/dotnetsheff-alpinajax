@@ -57,11 +57,11 @@
         .cols { display:flex; gap:1.2rem; align-items:stretch; justify-content:center; margin-top:.8em; }
         .col  { flex:1; border:1px solid var(--outline); border-radius:14px; padding:1.5rem 1.1rem 1.8rem; background:var(--white); }
         .col h3 { margin:0; font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:.7em; text-transform:uppercase; letter-spacing:.04em; }
-        .col .tag { font-size:.5em; color:var(--muted); margin-bottom:.4em; }
+        .col .tag { font-size:.5em; color:var(--muted); margin-bottom:0; }
         .col.ssr   h3 { color: var(--ink); }
         .col.spa   h3 { color: var(--danger); }
         .col.alpine h3 { color: var(--success); }
-        .diag { display:flex; flex-direction:column; align-items:center; gap:1.1em; margin:1.8em 0 1.1em; }
+        .diag { display:flex; flex-direction:column; align-items:center; gap:1.1em; margin:1.9em 0 1.9em; }
         .diag .node { background:var(--cream-dim); border:1px solid var(--outline); border-radius:9px;
             padding:.4em .9em; font-size:.6em; text-align:center; min-width:65%;
             min-height:2.6em; display:flex; flex-direction:column; align-items:center; justify-content:center; }
@@ -69,7 +69,7 @@
         .diag .wire { display:flex; gap:1.6em; font-size:.5em; color:var(--muted); align-items:center; }
         .diag .wire .ar { font-size:1.7em; color:var(--plum); margin:0 .35em; position:relative; top:.08em; }
         .verdict { display:grid; grid-template-columns:auto auto; column-gap:2em; row-gap:.9em;
-            width:fit-content; margin:1.6em auto 0; font-size:.56em; }
+            width:fit-content; margin:0 auto; font-size:.56em; }
         .verdict .vk { text-align:left; color:var(--muted); }
         .verdict .vv { text-align:left; color:var(--ink); font-weight:600; }
         .verdict b { font-weight:800; }
