@@ -63,10 +63,13 @@
         .col.alpine h3 { color: var(--success); }
         .diag { display:flex; flex-direction:column; align-items:center; gap:.55em; margin:1em 0 .4em; }
         .diag .node { background:var(--cream-dim); border:1px solid var(--outline); border-radius:9px;
-            padding:.5em .9em; font-size:.6em; text-align:center; min-width:65%; }
+            padding:.4em .9em; font-size:.6em; text-align:center; min-width:65%;
+            min-height:2.6em; display:flex; flex-direction:column; align-items:center; justify-content:center; }
         .diag .node .ns { display:block; font-size:.82em; color:var(--muted); }
         .diag .wire { display:flex; gap:1.4em; font-size:.46em; color:var(--muted); }
-        .verdict { font-size:.56em; color:var(--muted); line-height:2; margin-top:.6em; }
+        .verdict { font-size:.56em; color:var(--muted); margin-top:.8em; }
+        .verdict .vl { display:block; }
+        .verdict .vl + .vl { margin-top:.7em; }
         .verdict b { color:var(--ink); }
 
         /* ---- code (how it works) ---- */
@@ -226,7 +229,7 @@
                         </div>
                         <div class="node fragment" data-fragment-index="3">Server</div>
                     </div>
-                    <p class="verdict fragment" data-fragment-index="4">Logic: server ✅<br>UX: full reloads ❌</p>
+                    <p class="verdict fragment" data-fragment-index="4"><span class="vl">Logic: server ✅</span><span class="vl">UX: full reloads ❌</span></p>
                 </div>
                 <div class="col spa">
                     <h3>SPA</h3>
@@ -239,7 +242,7 @@
                         </div>
                         <div class="node fragment" data-fragment-index="7">Server<span class="ns">JSON API</span></div>
                     </div>
-                    <p class="verdict fragment" data-fragment-index="8">Logic: <b>both sides</b> 😱<br>UX: great ✅</p>
+                    <p class="verdict fragment" data-fragment-index="8"><span class="vl">Logic: <b>both sides</b> 😱</span><span class="vl">UX: great ✅</span></p>
                 </div>
                 <div class="col alpine">
                     <h3>Alpine AJAX</h3>
@@ -252,7 +255,7 @@
                         </div>
                         <div class="node fragment" data-fragment-index="11">Server</div>
                     </div>
-                    <p class="verdict fragment" data-fragment-index="12">Logic: server ✅<br>UX: great ✅</p>
+                    <p class="verdict fragment" data-fragment-index="12"><span class="vl">Logic: server ✅</span><span class="vl">UX: great ✅</span></p>
                 </div>
             </div>
             <aside class="notes">
@@ -383,7 +386,7 @@
 <script src="lib/reveal.js"></script>
 <script src="lib/notes.js"></script>
 <script>
-    Reveal.initialize({ hash: true, transition: 'slide', controls: false, plugins: [RevealNotes] });
+    Reveal.initialize({ transition: 'slide', controls: false, plugins: [RevealNotes] });
 
     // Hide the koala/name footer on the title slide only (it carries its own koala mark).
     const footer = document.querySelector('.brand-footer');
