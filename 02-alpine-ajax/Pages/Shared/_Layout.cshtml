@@ -4,11 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] · Quotes</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="~/lib/tailwind.js"></script>
 
     @* Alpine-AJAX plugin must load BEFORE Alpine core. Both deferred. *@
-    <script defer src="https://cdn.jsdelivr.net/npm/@@imacrayon/alpine-ajax@@0.12.x/dist/cdn.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="~/lib/alpine-ajax.js"></script>
+    <script defer src="~/lib/alpine.js"></script>
 
     @* Alpine-AJAX auto-adds aria-busy="true" to every target while a request
        is in flight, and disables submit buttons. This is the only styling

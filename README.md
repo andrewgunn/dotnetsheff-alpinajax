@@ -25,6 +25,10 @@ builder.Services.AddSingleton<QuoteStore>();
 It lives for the life of the process and **resets on restart** — handy for
 getting back to a clean slate mid-demo. The only requirement is the .NET 10 SDK.
 
+**Runs fully offline.** Alpine, alpine-ajax and Tailwind are vendored into each
+app's `wwwroot/lib/`, and reveal.js + Mermaid into `slides/lib/` — nothing is
+fetched from a CDN, so flaky venue wifi can't break the talk.
+
 ## Run it
 
 ```bash
