@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPA vibes, server brains — Alpine AJAX</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/white.css">
+
+    <style>
+        :root { --r-main-font: ui-sans-serif, system-ui, sans-serif; }
+        .reveal h1, .reveal h2 { letter-spacing: -0.02em; }
+        .reveal .muted { color: #64748b; }
+        .reveal .accent { color: #2563eb; }
+        .reveal section { font-size: 32px; }
+        .cols { display: flex; gap: 1.2rem; align-items: stretch; justify-content: center; }
+        .col { flex: 1; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1rem 1rem 0.4rem; background: #fff; }
+        .col h3 { margin: 0 0 0.2rem; font-size: 0.62em; text-transform: uppercase; letter-spacing: 0.05em; }
+        .col .tag { font-size: 0.5em; color: #64748b; }
+        .col.bad h3 { color: #dc2626; }
+        .col.good h3 { color: #16a34a; }
+        .reveal pre.mermaid { box-shadow: none; background: transparent; font-size: 0.5em; }
+        .reveal .lead { font-size: 1.3em; }
+        .kbd { font-size: 0.45em; color: #94a3b8; }
+    </style>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+
+        <!-- 1. TITLE -->
+        <section data-auto-animate>
+            <h1 data-id="t">SPA vibes,<br><span class="accent">server</span> brains</h1>
+            <p class="lead muted">Building SPA-feel apps with Razor Pages + Alpine AJAX</p>
+            <p class="muted" style="margin-top:2rem;">dotnetsheff · Andrew Gunn</p>
+            <aside class="notes">
+                We're going to build a CRUD app that feels like an SPA, but the logic
+                never leaves the server. First ~8 min: how we got here. Then we build it live.
+            </aside>
+        </section>
+
+        <!-- 2. TIMELINE -->
+        <section>
+            <h2>30 years, one full circle</h2>
+            <pre class="mermaid">
+timeline
+    title From server HTML, to the client, and back
+    1996 : Classic ASP : Server renders HTML
+    2002 : ASP.NET Web Forms : Postbacks &amp; ViewState
+    2006 : jQuery / Underscore / CoffeeScript : Sprinkles of JS
+    2013 : Angular / React : The SPA era — logic moves to the client
+    2020 : htmx / Alpine AJAX : HTML over the wire, again
+            </pre>
+            <aside class="notes">
+                ASP and Web Forms: server rendered everything. Then jQuery let us
+                sprinkle behaviour. Then SPAs swallowed the world — and we moved all
+                the logic to the browser. Alpine AJAX is the pendulum swinging back:
+                keep the snappy UX, put the logic back where it belongs.
+            </aside>
+        </section>
+
+        <!-- 3. THREE ARCHITECTURES -->
+        <section>
+            <h2>Where does the logic live?</h2>
+            <div class="cols">
+                <div class="col">
+                    <h3>Classic SSR</h3>
+                    <div class="tag">HTML over the wire</div>
+                    <pre class="mermaid">
+graph TD
+  B[Browser] -- request --> S[Server]
+  S -- full HTML page --> B
+                    </pre>
+                    <p class="kbd">Logic: server ✅ · UX: full reloads ❌</p>
+                </div>
+                <div class="col bad">
+                    <h3>SPA</h3>
+                    <div class="tag">JSON over the wire</div>
+                    <pre class="mermaid">
+graph TD
+  B["Browser<br/>(state, routing, logic)"] -- fetch --> A[JSON API]
+  A --> DB[Server]
+                    </pre>
+                    <p class="kbd">Logic: <b>both sides</b> 😱 · UX: great ✅</p>
+                </div>
+                <div class="col good">
+                    <h3>Alpine AJAX</h3>
+                    <div class="tag">HTML fragments</div>
+                    <pre class="mermaid">
+graph TD
+  B[Browser] -- request --> S[Server]
+  S -- HTML fragment --> B
+                    </pre>
+                    <p class="kbd">Logic: server ✅ · UX: great ✅</p>
+                </div>
+            </div>
+            <aside class="notes">
+                SSR: logic on the server, but full reloads. SPA: gorgeous UX, but now
+                you maintain logic, validation and routing TWICE — and a JSON API in
+                between. Alpine AJAX: the server still renders HTML; Alpine swaps in
+                just the bits that changed. One codebase, one source of truth.
+            </aside>
+        </section>
+
+        <!-- 4. THESIS -->
+        <section data-auto-animate>
+            <h2 data-id="t">The pitch</h2>
+            <p class="lead">The server is the best place for your logic.</p>
+            <p class="lead muted">Send <span class="accent">HTML</span>, not JSON.</p>
+            <p class="lead">Keep the SPA feel — with attributes, not a framework.</p>
+            <aside class="notes">
+                No build step. No client state to sync. No second codebase. Your
+                ModelState validation, your auth, your domain rules — all stay on the
+                server. Alpine AJAX is ~5 attributes. That's the whole API.
+            </aside>
+        </section>
+
+        <!-- 5. LET'S BUILD IT -->
+        <section data-auto-animate>
+            <h1 data-id="t">Let's build it</h1>
+            <p class="lead muted">A Razor Pages quotes app → sprinkle Alpine, one attribute at a time</p>
+            <p class="kbd" style="margin-top:2rem;">x-target · x-sync · x-merge · @ajax:before · $dispatch</p>
+            <aside class="notes">
+                Start: plain server-rendered Razor Pages, full reloads, works with no JS.
+                Then 10 small steps. If we run out of time, we just stop — every step
+                stands on its own.
+            </aside>
+        </section>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/notes/notes.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script>
+    mermaid.initialize({ startOnLoad: true, theme: 'neutral', securityLevel: 'loose' });
+    Reveal.initialize({ hash: true, transition: 'slide', plugins: [RevealNotes] });
+</script>
+</body>
+</html>
