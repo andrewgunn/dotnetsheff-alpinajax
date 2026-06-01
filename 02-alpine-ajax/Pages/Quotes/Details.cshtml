@@ -51,7 +51,7 @@
                                 </div>
                                 <div class="flex shrink-0 gap-2 text-xs">
                                     <a href="/Quotes/@Model.Quote.Id?editNote=@note.Id" x-target="note-@note.Id" class="text-blue-600 hover:underline">Edit</a>
-                                    <form method="post" asp-page-handler="DeleteNote" asp-route-id="@Model.Quote.Id" asp-route-noteId="@note.Id" x-target="notes">
+                                    <form method="post" asp-page-handler="DeleteNote" asp-route-id="@Model.Quote.Id" asp-route-noteId="@note.Id" x-target="notes" @@ajax:before="confirm('Delete this note?') || $event.preventDefault()">
                                         <button type="submit" class="text-red-600 hover:underline">Delete</button>
                                     </form>
                                 </div>
