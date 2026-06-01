@@ -10,8 +10,9 @@ server.
 |------|------------|
 | `slides/index.html` | The ~8-min opener (reveal.js + Mermaid). Open in a browser; press `S` for speaker notes. |
 | `01-razor-ssr/` | **Pure server-rendered Razor Pages.** The starting point we live-code from. No JS framework — add/edit/delete are full POST + redirect. |
-| `02-alpine-ajax/` | **The finished version.** Same app, with Alpine AJAX sprinkled on. Its git history has **one commit per beat** (`git log --oneline`). |
-| `SNIPPETS.md` | Live-coding cheat-sheet: per beat, what to type and the line to say. |
+| `02-alpine-ajax/` | **The finished version** — *backup only.* Same app with Alpine AJAX applied; its git history has one commit per beat (`git log --oneline`). |
+| **`DEMO_GUIDE.md`** | **The live walkthrough.** Every change in order, full text inline — follow it top-to-bottom, nothing to look up elsewhere. Use this during the talk. |
+| `SNIPPETS.md` | One-glance cheat-sheet (terser than the guide). |
 
 ## No database, no setup
 
