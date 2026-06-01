@@ -66,7 +66,8 @@
             padding:.4em .9em; font-size:.6em; text-align:center; min-width:65%;
             min-height:2.6em; display:flex; flex-direction:column; align-items:center; justify-content:center; }
         .diag .node .ns { display:block; font-size:.82em; color:var(--muted); }
-        .diag .wire { display:flex; gap:1.4em; font-size:.46em; color:var(--muted); }
+        .diag .wire { display:flex; gap:1.6em; font-size:.5em; color:var(--muted); align-items:center; }
+        .diag .wire .ar { font-size:1.7em; color:var(--plum); margin:0 .35em; position:relative; top:.08em; }
         .verdict { display:grid; grid-template-columns:auto auto; column-gap:2em; row-gap:.9em;
             width:fit-content; margin:1.6em auto 0; font-size:.56em; }
         .verdict .vk { text-align:left; color:var(--muted); }
@@ -247,8 +248,8 @@
                     <div class="diag">
                         <div class="node fragment" data-fragment-index="1">Browser</div>
                         <div class="wire">
-                            <span class="fragment" data-fragment-index="2">request ↓</span>
-                            <span class="fragment" data-fragment-index="4">↑ full HTML page</span>
+                            <span class="fragment" data-fragment-index="2">request<span class="ar">↓</span></span>
+                            <span class="fragment" data-fragment-index="4"><span class="ar">↑</span>full HTML page</span>
                         </div>
                         <div class="node fragment" data-fragment-index="3">Server</div>
                     </div>
@@ -263,8 +264,8 @@
                     <div class="diag">
                         <div class="node fragment" data-fragment-index="5">Browser<span class="ns">state, routing, logic</span></div>
                         <div class="wire">
-                            <span class="fragment" data-fragment-index="6">request ↓</span>
-                            <span class="fragment" data-fragment-index="8">↑ JSON</span>
+                            <span class="fragment" data-fragment-index="6">request<span class="ar">↓</span></span>
+                            <span class="fragment" data-fragment-index="8"><span class="ar">↑</span>JSON</span>
                         </div>
                         <div class="node fragment" data-fragment-index="7">Server<span class="ns">JSON API</span></div>
                     </div>
@@ -279,8 +280,8 @@
                     <div class="diag">
                         <div class="node fragment" data-fragment-index="9">Browser</div>
                         <div class="wire">
-                            <span class="fragment" data-fragment-index="10">request ↓</span>
-                            <span class="fragment" data-fragment-index="12">↑ HTML fragment</span>
+                            <span class="fragment" data-fragment-index="10">request<span class="ar">↓</span></span>
+                            <span class="fragment" data-fragment-index="12"><span class="ar">↑</span>HTML fragment</span>
                         </div>
                         <div class="node fragment" data-fragment-index="11">Server</div>
                     </div>
