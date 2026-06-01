@@ -61,19 +61,49 @@
         .col.ssr   h3 { color: var(--ink); }
         .col.spa   h3 { color: var(--danger); }
         .col.alpine h3 { color: var(--success); }
-        .col pre.mermaid { box-shadow:none; background:transparent; font-size:.5em; margin:.3em 0; }
+        .col pre.mermaid { box-shadow:none; background:transparent; font-size:.55em; margin:.3em 0; display:flex; justify-content:center; }
         .verdict { font-size:.46em; color:var(--muted); line-height:1.6; margin-top:.4em; }
         .verdict b { color:var(--ink); }
 
         /* ---- code (how it works) ---- */
-        .reveal pre.code { width:88%; margin:.5em auto; box-shadow:0 1px 0 var(--outline);
-            border:1px solid var(--outline); border-radius:12px; background:var(--white); }
-        .reveal pre.code code { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.5em; line-height:1.5;
-            display:block; padding:.9em 1.1em; color:var(--ink); white-space:pre; }
-        .reveal .add { background:var(--plum-soft); color:var(--plum-ink); border-radius:4px; padding:0 .15em; font-weight:700; }
-        .reveal .cap { font-size:.62em; color:var(--muted); margin:.1em 0 .4em; font-weight:600; letter-spacing:.03em; }
-        .flow { font-size:.66em; color:var(--ink); line-height:1.7; margin-top:.3em; }
-        .flow .step { color:var(--plum); font-weight:800; }
+        .reveal pre.code { width:78%; margin:.4em auto; box-shadow:0 1px 0 var(--outline);
+            border:1px solid var(--outline); border-radius:14px; background:var(--white); }
+        .reveal pre.code code { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.78em; line-height:1.6;
+            display:block; padding:1.1em 1.4em; color:var(--ink); white-space:pre; }
+        .reveal .add { background:var(--plum-soft); color:var(--plum-ink); border-radius:5px; padding:.05em .3em; font-weight:700; }
+        .reveal .cap { font-size:.82em; color:var(--muted); margin:.3em 0 .5em; font-weight:600; letter-spacing:.03em; }
+        .flow { display:grid; grid-template-columns:repeat(4,1fr); gap:1.1em; width:90%; margin:1.5em auto 0; }
+        .flow .item { font-size:.6em; color:var(--ink); line-height:1.45; text-align:center; }
+        .flow .n { display:flex; align-items:center; justify-content:center; width:2em; height:2em; margin:0 auto .55em;
+            border-radius:50%; background:var(--plum); color:#fff; font-weight:800; }
+        .flow code { background:var(--cream-dim); border-radius:4px; padding:0 .25em; }
+
+        /* ---- title avatar ---- */
+        .avatar { width:150px; height:150px; border-radius:50%; object-fit:cover;
+            border:4px solid var(--white); box-shadow:0 4px 18px rgba(20,23,27,.15); margin:1em auto .5em; }
+        .avatar-name { font-weight:800; font-size:1.05em; margin-bottom:1.2em; }
+        .title-koala { height:34px; opacity:.9; }
+
+        /* ---- how-it-works: two-column markup + DevTools mock ---- */
+        .hiw h2 { margin-bottom:1.1em; }
+        .hiw-grid { display:grid; grid-template-columns:1fr auto 1fr; gap:1.4em; align-items:center; width:96%; margin:0 auto; }
+        .hiw-grid .cap { text-align:center; margin:0 0 .7em; }
+        .hiw-grid pre.code { width:100%; margin:0; }
+        .hiw-grid pre.code code { font-size:.72em; line-height:1.7; padding:1.1em 1.3em; }
+        .arrows { text-align:center; color:var(--plum); font-family:ui-monospace,monospace; }
+        .arrows .a  { font-size:2.1em; line-height:1; }
+        .arrows .al { font-size:.4em; color:var(--muted); margin:.1em 0 .8em; letter-spacing:.03em; }
+        .devtools { border:1px solid var(--outline); border-radius:12px; background:var(--white); overflow:hidden;
+            text-align:left; box-shadow:0 3px 14px rgba(20,23,27,.08); }
+        .dt-bar { background:var(--cream-dim); padding:.5em .7em; display:flex; align-items:center; gap:.45em; font-size:.42em; color:var(--muted); }
+        .dt-bar i.d { width:.85em; height:.85em; border-radius:50%; display:inline-block; }
+        .dt-bar i.r{ background:#ED6A5E; } .dt-bar i.y{ background:#F4BF50; } .dt-bar i.g{ background:#61C554; }
+        .dt-bar span { margin-left:.5em; font-weight:700; letter-spacing:.03em; }
+        .dt-row { font-family:ui-monospace,monospace; font-size:.5em; padding:.7em .9em; border-bottom:1px solid var(--outline-2); }
+        .dt-row .verb { color:var(--plum); font-weight:800; } .dt-row .ok { color:var(--success); font-weight:800; } .dt-row .ty { color:var(--muted); }
+        .dt-sec { font-size:.4em; text-transform:uppercase; letter-spacing:.06em; color:var(--hint); padding:.6em .9em .15em; font-weight:700; }
+        .dt-mono { font-family:ui-monospace,monospace; font-size:.5em; white-space:pre; padding:0 .9em .65em; color:var(--ink); line-height:1.6; }
+        .dt-mono .hl { background:var(--plum-soft); color:var(--plum-ink); border-radius:3px; padding:.05em .25em; }
 
         /* ---- chips ---- */
         .chips { margin-top:1.4em; display:flex; gap:.5em; justify-content:center; flex-wrap:wrap; }
@@ -84,7 +114,7 @@
 
         /* ---- subtle persistent koala + name footer (every slide) ---- */
         .brand-footer { position:fixed; bottom:18px; left:0; right:0; z-index:30;
-            display:flex; align-items:center; justify-content:space-between;
+            display:none; align-items:center; justify-content:space-between;
             padding:0 30px; pointer-events:none; opacity:.6; }
         .brand-footer img { height:22px; }
         .brand-footer .who { font-family:'Plus Jakarta Sans',sans-serif; font-size:13px; color:var(--muted); }
@@ -100,9 +130,14 @@
         <section data-auto-animate>
             <h1 data-id="t">SPA vibes,<br><span class="plum">server</span> brains</h1>
             <p class="lead muted">SPA-feel apps with Razor Pages &amp; Alpine AJAX</p>
-            <p class="byline">Andrew Gunn</p>
-            <p class="venue">dotnetsheff</p>
-            <aside class="notes">CRUD app that feels like an SPA, logic never leaves the server. ~8 min history, then build it live.</aside>
+            <img class="avatar" src="lib/andrew-gunn.jpeg" alt="Andrew Gunn">
+            <p class="avatar-name">Andrew Gunn</p>
+            <img class="title-koala" src="lib/koala-logo.png" alt="koala">
+            <aside class="notes">
+                Hi, I'm Andrew. Today: building apps that <b>feel</b> like a SPA, where the logic never leaves the server.
+                Plan: ~8 minutes of history to set up <i>why</i>, then we build it live with .NET Razor Pages + Alpine AJAX.
+                The promise — SPA-style UX with almost no JavaScript.
+            </aside>
         </section>
 
         <!-- 2. TIMELINE (CSS, per-year fragments) -->
@@ -134,7 +169,15 @@
                     </div>
                 </div>
             </div>
-            <aside class="notes">ASP &amp; Web Forms rendered on the server. jQuery let us sprinkle. SPAs swallowed the world and moved all logic to the browser. Alpine AJAX swings it back: keep the UX, put the logic home.</aside>
+            <aside class="notes">
+                Quick history, one click per era.
+                1996 — Classic ASP: server spits out HTML.
+                2002 — Web Forms: still the server, but postbacks &amp; ViewState hid the web from us.
+                2006 — jQuery, Underscore, CoffeeScript: we start sprinkling JavaScript.
+                2013 — Angular, React: the SPA era — we move <b>all</b> the logic into the browser.
+                2020 — htmx, Alpine: we realise we over-corrected, and come back to HTML over the wire.
+                Watch the colours: we left home (plum), wandered (amber, red), and came back (green).
+            </aside>
         </section>
 
         <!-- 3. WHERE DOES LOGIC LIVE (per-column fragments) -->
@@ -172,50 +215,76 @@ graph TD
                     <p class="verdict">Logic: server ✅<br>UX: great ✅</p>
                 </div>
             </div>
-            <aside class="notes">SSR: logic on the server, full reloads. SPA: lovely UX but logic, validation and routing live TWICE, with a JSON API between. Alpine: server renders HTML, Alpine swaps the changed bits. One codebase, one source of truth.</aside>
+            <aside class="notes">
+                Three ways to build the same app, one click each.
+                Classic SSR: logic lives on the server — but every click is a full page reload.
+                SPA: gorgeous UX, but your logic, validation and routing now live on <b>both</b> sides,
+                with a JSON API to build and maintain in between. Often two codebases.
+                Alpine AJAX: the server still renders HTML, Alpine swaps in just the changed bit.
+                Server logic, SPA feel, one codebase, one source of truth.
+            </aside>
         </section>
 
-        <!-- 4. HOW ALPINE AJAX WORKS (NEW — before/after) -->
-        <section>
-            <h2>So how does it work?</h2>
-            <p class="cap">BEFORE — a plain Razor Pages form (full reload)</p>
-            <pre class="code"><code>&lt;form method="post" action="/notes"&gt;
-  &lt;textarea name="Body"&gt;&lt;/textarea&gt;
-&lt;/form&gt;</code></pre>
-
-            <div class="fragment">
-                <p class="cap">AFTER — add one attribute</p>
-                <pre class="code"><code>&lt;form method="post" action="/notes" <span class="add">x-target="notes"</span>&gt;
-  &lt;textarea name="Body"&gt;&lt;/textarea&gt;
-&lt;/form&gt;</code></pre>
-            </div>
-
-            <p class="flow fragment">
-                <span class="step">1</span> Alpine intercepts the submit &nbsp;
-                <span class="step">2</span> posts &amp; reads the HTML response &nbsp;
-                <span class="step">3</span> finds <code>#notes</code> in it &nbsp;
-                <span class="step">4</span> swaps just that element in
-            </p>
-            <aside class="notes">No JSON. No client state. The server already renders the page; Alpine just plucks the element you named out of the response and swaps it. Same HTML, no full reload.</aside>
-        </section>
-
-        <!-- 5. THESIS -->
+        <!-- 4. THESIS — the pitch, before the examples -->
         <section data-auto-animate>
             <h2 data-id="t">The pitch</h2>
-            <p class="lead">The server is the best place for your logic.</p>
-            <p class="lead muted">Send <span class="plum">HTML</span>, not JSON.</p>
-            <p class="lead">Keep the SPA feel — with attributes, not a framework.</p>
-            <aside class="notes">No build step. No client state to sync. No second codebase. ModelState validation, auth, domain rules all stay server-side. Alpine AJAX is ~5 attributes — that's the whole API.</aside>
+            <p class="lead">Logic on the <span class="plum">server</span>.</p>
+            <p class="lead">SPA feel on the client.</p>
+            <aside class="notes">
+                This is the whole argument. The server is the best place for your logic — your data, auth and rules
+                already live there. So send HTML, the browser's native format, not JSON you have to re-assemble on the
+                client. And you keep the SPA feel with a handful of attributes, not a framework: no build step, no
+                client state to sync, no second codebase.
+            </aside>
+        </section>
+
+        <!-- 5. HOW ALPINE AJAX WORKS — examples, after the pitch -->
+        <section class="hiw">
+            <h2>So how does it work?</h2>
+            <div class="hiw-grid">
+                <div class="hiw-left">
+                    <p class="cap">Your markup — add one attribute</p>
+                    <pre class="code"><code>&lt;form action="/notes" method="post"
+      <span class="add">x-target="notes"</span>&gt;
+  &lt;textarea name="Body"&gt;&lt;/textarea&gt;
+&lt;/form&gt;</code></pre>
+                </div>
+
+                <div class="arrows fragment">
+                    <div class="a">&rarr;</div><div class="al">request</div>
+                    <div class="a">&larr;</div><div class="al">#notes HTML</div>
+                </div>
+
+                <div class="hiw-right fragment">
+                    <div class="devtools">
+                        <div class="dt-bar"><i class="d r"></i><i class="d y"></i><i class="d g"></i><span>Network</span></div>
+                        <div class="dt-row"><b class="verb">POST</b> /notes <b class="ok">200</b> <span class="ty">fetch</span></div>
+                        <div class="dt-sec">Request Headers</div>
+                        <div class="dt-mono"><span class="hl">X-Alpine-Request: true</span></div>
+                        <div class="dt-sec">Response <span class="ty">text/html</span></div>
+                        <div class="dt-mono">&lt;ul id="notes"&gt;
+  &lt;li&gt;Chase signature&lt;/li&gt;
+  &lt;li&gt;Pay deposit&lt;/li&gt;
+&lt;/ul&gt;</div>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="notes">
+                Concretely. You write a normal form and add one attribute, x-target="notes".
+                On submit (click) Alpine fires a real AJAX request — here's the DevTools Network tab: a POST,
+                with the X-Alpine-Request header, and the response is text/html, an actual #notes fragment, not JSON.
+                (click) Then: Alpine intercepts the submit, reads that HTML, finds #notes in it, and swaps just that
+                element in. The server already rendered it — Alpine just plucks out the bit you named.
+            </aside>
         </section>
 
         <!-- 6. LET'S BUILD IT -->
         <section data-auto-animate>
             <h1 data-id="t">Let's build it</h1>
-            <p class="lead muted">A Razor Pages quotes app, one attribute at a time</p>
-            <div class="chips">
-                <span>x-target</span><span>x-sync</span><span>x-merge</span><span>@ajax:before</span><span>$dispatch</span>
-            </div>
-            <aside class="notes">Start: plain server-rendered Razor Pages, works with no JS. Then 10 small steps. If we run out of time we just stop — every step stands alone.</aside>
+            <p class="lead muted">Plain Razor Pages, then sprinkle Alpine — one step at a time</p>
+            <p class="lead" style="margin-top:.6em;">No JSON. No build step. No SPA framework.</p>
+            <aside class="notes">Start: plain server-rendered Razor Pages, works with no JS. Then 10 small steps, adding one attribute at a time. If we run out of time we just stop — every step stands alone.</aside>
         </section>
 
     </div>
@@ -223,7 +292,7 @@ graph TD
     <!-- subtle koala + name on every slide -->
     <div class="brand-footer">
         <img src="lib/koala-logo.png" alt="koala">
-        <span class="who"><b>Andrew Gunn</b> &nbsp;dotnetsheff</span>
+        <span class="who"><b>Andrew Gunn</b></span>
     </div>
 </div>
 
@@ -246,6 +315,12 @@ graph TD
         }
     });
     Reveal.initialize({ hash: true, transition: 'slide', controls: false, plugins: [RevealNotes] });
+
+    // Hide the koala/name footer on the title slide only (it carries its own koala mark).
+    const footer = document.querySelector('.brand-footer');
+    const toggleFooter = () => { footer.style.display = Reveal.getIndices().h === 0 ? 'none' : 'flex'; };
+    Reveal.on('ready', toggleFooter);
+    Reveal.on('slidechanged', toggleFooter);
 </script>
 </body>
 </html>
