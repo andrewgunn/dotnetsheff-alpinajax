@@ -459,6 +459,11 @@
     const toggleFooter = () => { footer.style.display = Reveal.getIndices().h === 0 ? 'none' : 'flex'; };
     Reveal.on('ready', toggleFooter);
     Reveal.on('slidechanged', toggleFooter);
+
+    // Update the URL hash instantly on navigation (reveal's own write is debounced).
+    const writeHash = () => { const i = Reveal.getIndices(); history.replaceState(null, '', '#/' + i.h + (i.v ? '/' + i.v : '')); };
+    Reveal.on('ready', writeHash);
+    Reveal.on('slidechanged', writeHash);
 </script>
 </body>
 </html>
