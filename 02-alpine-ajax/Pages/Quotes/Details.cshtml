@@ -84,7 +84,8 @@
             <div class="text-sm text-slate-500">notes</div>
         </section>
 
-        <section class="rounded-lg border border-slate-200 bg-white p-6">
+        <section x-init @@note:changed.window="$ajax('/Quotes/@Model.Quote.Id', { target: 'activity' })"
+                 class="rounded-lg border border-slate-200 bg-white p-6">
             <h2 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-500">Recent activity</h2>
             <ul id="activity" class="space-y-2 text-sm">
                 @foreach (var activity in Model.Quote.Activities.OrderByDescending(a => a.Timestamp).Take(6))
