@@ -66,7 +66,7 @@
             padding:.5em .9em; font-size:.6em; text-align:center; min-width:65%; }
         .diag .node .ns { display:block; font-size:.82em; color:var(--muted); }
         .diag .wire { display:flex; gap:1.4em; font-size:.46em; color:var(--muted); }
-        .verdict { font-size:.46em; color:var(--muted); line-height:1.6; margin-top:.4em; }
+        .verdict { font-size:.56em; color:var(--muted); line-height:2; margin-top:.6em; }
         .verdict b { color:var(--ink); }
 
         /* ---- code (how it works) ---- */
@@ -100,6 +100,7 @@
             border-radius:6px; padding:.1em .35em; font-size:.95em; }
         .meme-slide .anakin { position:relative; display:inline-block; }
         .meme-slide .anakin img { height:600px; border-radius:16px; display:block; box-shadow:0 8px 30px rgba(20,23,27,.2); }
+        .meme-slide .anakin.landscape img { height:auto; width:840px; }
         .meme-cap { position:absolute; left:0; right:0; bottom:6%; text-align:center; padding:0 .4em; line-height:1.1;
             font-family:Impact,'Arial Black',sans-serif; text-transform:uppercase; font-weight:900; font-size:46px;
             color:#fff; -webkit-text-stroke:2px #000; paint-order:stroke fill; text-shadow:3px 3px 0 #000; }
@@ -275,8 +276,8 @@
         <section class="meme-slide">
             <div class="drake">
                 <img src="lib/drake.jpg" alt="Drake meme">
-                <div class="dk dk-top">Client-side state<br>JSON API<br>Build pipeline</div>
-                <div class="dk dk-bot">Server-rendered HTML<br>A sprinkle of Alpine AJAX</div>
+                <div class="dk dk-top">•  Logic &amp; validation, twice<br>•  Client-side state<br>•  A JSON API<br>•  A build pipeline</div>
+                <div class="dk dk-bot">•  Server-rendered HTML<br>•  A sprinkle of Alpine AJAX</div>
             </div>
             <aside class="notes">
                 The pitch, in one image. Option one — a JSON API, client-side state, a build pipeline: the whole SPA
@@ -363,9 +364,9 @@
 
         <!-- 6. LET'S BUILD IT -->
         <section class="meme-slide">
-            <div class="anakin">
-                <img src="lib/rubhands.jpg" alt="rubbing hands">
-                <div class="meme-cap">Let's build it</div>
+            <div class="anakin landscape">
+                <img src="lib/demotime.jpg" alt="Demo time">
+                <div class="meme-cap">Demo time</div>
             </div>
             <aside class="notes">Enough theory — let's build it. We start with plain server-rendered Razor Pages that works with no JS, then sprinkle Alpine on, one attribute at a time. About 10 small steps; if we run out of time, we just stop — every step stands alone.</aside>
         </section>
