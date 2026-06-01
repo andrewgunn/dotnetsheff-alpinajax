@@ -163,12 +163,19 @@
 
         <!-- 1. TITLE -->
         <section data-auto-animate>
-            <h1 data-id="t">SPA vibes,<br><span class="plum">server</span> brains</h1>
-            <p class="lead muted">SPA-feel apps with Razor Pages &amp; Alpine AJAX</p>
+            <h1 data-id="t">npm uninstall <span class="plum">everything</span></h1>
+            <p class="lead muted">SPA-feel apps with .NET Razor Pages + Alpine AJAX</p>
             <img class="avatar" src="lib/ag.webp" alt="Andrew Gunn">
             <p class="avatar-name">Andrew Gunn</p>
             <img class="title-koala" src="lib/koala-logo.png" alt="koala">
             <aside class="notes">
+                <ul>
+                    <li>Hook: we rebuild, in the browser, HTML the server already had</li>
+                    <li>What if we stopped doing that?</li>
+                    <li>Alpine: request → HTML → swap. No vDOM, no state lib, no node_modules</li>
+                    <li>Backend-agnostic → perfect fit for Razor Pages</li>
+                    <li>Plan: how it works, then convert a Razor app live</li>
+                </ul>
                 We've spent years building SPAs that serialize data to JSON, ship it to a framework, and reconstruct
                 the same HTML the server could have just sent in the first place. What if we stopped doing that?
 
@@ -212,6 +219,14 @@
                 </div>
             </div>
             <aside class="notes">
+                <ul>
+                    <li>One click per era</li>
+                    <li>ASP / Web Forms = server renders</li>
+                    <li>jQuery era = JS sprinkles</li>
+                    <li>React/Angular = logic moves to the client</li>
+                    <li>htmx / Alpine = HTML over the wire, again</li>
+                    <li>Colours: left home → wandered → came back</li>
+                </ul>
                 Quick history, one click per era.
                 1996 — Classic ASP: server spits out HTML.
                 2002 — Web Forms: still the server, but postbacks &amp; ViewState hid the web from us.
@@ -276,6 +291,13 @@
                 </div>
             </div>
             <aside class="notes">
+                <ul>
+                    <li>Same app, three ways — build each box by box</li>
+                    <li>SSR: server logic, but full reloads</li>
+                    <li>SPA: logic BOTH sides + JSON API + build step — the cost</li>
+                    <li>Alpine: server logic + SPA feel, one codebase</li>
+                    <li>Rallying cry: HTML over the wire, not JSON</li>
+                </ul>
                 Three ways to build the same app — I'll build each one up, box by box.
 
                 Classic SSR: logic on the server, HTML over the wire. Simple, SEO-friendly, no build step —
@@ -300,6 +322,12 @@
                 <div class="dk dk-bot">•  Server-rendered HTML<br>•  A sprinkle of Alpine AJAX</div>
             </div>
             <aside class="notes">
+                <ul>
+                    <li>The pitch in one image</li>
+                    <li>Reject: the whole SPA stack (vDOM, JSON API, state, node_modules, logic twice)</li>
+                    <li>Accept: server-rendered HTML + a sprinkle of Alpine</li>
+                    <li>Server is the best place for logic</li>
+                </ul>
                 The pitch, in one image. Option one — a JSON API, client-side state, a build pipeline: the whole SPA
                 stack, just to update part of a page. Option two — add x-target to a form. Logic stays on the server,
                 the UX still feels instant. The server is the best place for your logic; send HTML, not JSON.
@@ -339,7 +367,13 @@
                     <div class="result-hd reload-hd">🔄 The whole page is thrown away &amp; re-rendered</div>
                 </div>
             </div>
-            <aside class="notes">First, the old way. A plain form posts; the server responds and the browser throws the page away and renders a brand-new one. Note the request type — "document" — and the response is the entire HTML page. It works, but it flickers and you lose scroll position and focus.</aside>
+            <aside class="notes">
+                <ul>
+                    <li>The old way: plain form → full page reload</li>
+                    <li>DevTools: type = "document", whole HTML page back</li>
+                    <li>Works, but flicker + lost scroll/focus</li>
+                </ul>
+                First, the old way. A plain form posts; the server responds and the browser throws the page away and renders a brand-new one. Note the request type — "document" — and the response is the entire HTML page. It works, but it flickers and you lose scroll position and focus.</aside>
         </section>
 
         <!-- 5b. HOW IT WORKS — the Alpine way (partial swap) -->
@@ -379,7 +413,14 @@
                     <div class="result-hd" style="margin:0;">✓ #notes swapped in place — no reload</div>
                 </div>
             </div>
-            <aside class="notes">Same form, one attribute: x-target="notes". On submit (click) Alpine fires a real AJAX request — POST, with the X-Alpine-Request header, and the response is text/html: just the #notes fragment, not JSON, not the whole page. (click) Alpine reads it, finds #notes, and (click) swaps that element in place. No reload, no lost scroll, no flicker.</aside>
+            <aside class="notes">
+                <ul>
+                    <li>Same form + one attribute: x-target="notes"</li>
+                    <li>AJAX POST, X-Alpine-Request header</li>
+                    <li>Response = text/html, just the #notes fragment (not JSON)</li>
+                    <li>Alpine finds #notes → swaps it in place, no reload</li>
+                </ul>
+                Same form, one attribute: x-target="notes". On submit (click) Alpine fires a real AJAX request — POST, with the X-Alpine-Request header, and the response is text/html: just the #notes fragment, not JSON, not the whole page. (click) Alpine reads it, finds #notes, and (click) swaps that element in place. No reload, no lost scroll, no flicker.</aside>
         </section>
 
         <!-- 6. LET'S BUILD IT -->
@@ -388,7 +429,14 @@
                 <img src="lib/demotime.jpg" alt="Demo time">
                 <div class="meme-cap">Demo time</div>
             </div>
-            <aside class="notes">Enough theory — let's build it. We start with plain server-rendered Razor Pages that works with no JS, then sprinkle Alpine on, one attribute at a time. About 10 small steps; if we run out of time, we just stop — every step stands alone.</aside>
+            <aside class="notes">
+                <ul>
+                    <li>Switch to the editor</li>
+                    <li>Start: plain Razor Pages, works with no JS</li>
+                    <li>Sprinkle Alpine one attribute at a time (~10 steps)</li>
+                    <li>Run out of time → just stop, each step stands alone</li>
+                </ul>
+                Enough theory — let's build it. We start with plain server-rendered Razor Pages that works with no JS, then sprinkle Alpine on, one attribute at a time. About 10 small steps; if we run out of time, we just stop — every step stands alone.</aside>
         </section>
 
     </div>
