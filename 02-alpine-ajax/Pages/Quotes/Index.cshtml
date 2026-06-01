@@ -19,11 +19,14 @@
         <tbody class="divide-y divide-slate-100">
             @foreach (var quote in Model.Quotes)
             {
-                <tr class="hover:bg-slate-50">
+                <tr onclick="location.href='/Quotes/@quote.Id'" class="cursor-pointer hover:bg-slate-50">
                     <td class="px-4 py-3">
                         <a href="/Quotes/@quote.Id" class="font-medium text-blue-600 hover:underline">@quote.Reference</a>
                     </td>
-                    <td class="px-4 py-3">@quote.ClientName</td>
+                    <td class="px-4 py-3">
+                        <div>@quote.ClientName</div>
+                        <div class="text-xs text-slate-400">@quote.PropertyAddress</div>
+                    </td>
                     <td class="px-4 py-3 text-right tabular-nums">£@quote.Amount.ToString("N0")</td>
                     <td class="px-4 py-3">
                         <span class="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-600">@quote.Status</span>
