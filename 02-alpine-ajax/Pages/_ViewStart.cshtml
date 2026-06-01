@@ -1,3 +1,8 @@
-﻿@{
-    Layout = "_Layout";
+@{
+    // Alpine-AJAX sends X-Alpine-Request on every request. When it's present we
+    // skip the full page chrome and return a lean fragment; normal navigations
+    // still get the full layout (so the app works with no JS).
+    Layout = Context.Request.Headers.ContainsKey("X-Alpine-Request")
+        ? "_LayoutAjax"
+        : "_Layout";
 }

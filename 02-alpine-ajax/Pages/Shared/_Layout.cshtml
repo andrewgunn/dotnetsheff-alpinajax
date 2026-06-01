@@ -1,4 +1,3 @@
-@{ var toast = TempData["Toast"] as string; }
 <!DOCTYPE html>
 <html lang="en" class="h-full">
 <head>
@@ -36,32 +35,6 @@
         @RenderBody()
     </main>
 
-    @* Toasts. x-sync = this list updates from ANY Alpine response; prepend so
-       new toasts stack on top instead of replacing the ones already showing.
-       The server drops a <li> in here (via TempData) after each mutation. *@
-    <ul id="notifications" x-sync x-merge="prepend" role="status"
-        class="pointer-events-none fixed bottom-4 right-4 z-50 flex flex-col gap-2">
-        @if (toast is not null)
-        {
-            <li x-data="{ show: false,
-                          init() { this.$nextTick(() => this.show = true); setTimeout(() => this.dismiss(), 6000) },
-                          dismiss() { this.show = false; setTimeout(() => this.$root.remove(), 500) } }"
-                x-show="show" x-transition.duration.500ms
-                class="pointer-events-auto flex items-center gap-3 rounded-md bg-slate-900 px-4 py-2 text-sm text-white shadow-lg">
-                <span>@toast</span>
-                <button @@click="dismiss" type="button" aria-label="Dismiss" class="text-slate-400 hover:text-white">&times;</button>
-            </li>
-        }
-    </ul>
-
-    @* Server-dispatched events. This x-sync slot is empty on a normal load.
-       After a mutation the server fills it with a tiny element whose x-init
-       fires a 'note:changed' signal — anything listening can react. *@
-    <div id="server_events" x-sync>
-        @if (toast is not null)
-        {
-            <div x-init="$dispatch('note:changed')"></div>
-        }
-    </div>
+    <partial name="_LiveRegions" />
 </body>
 </html>
