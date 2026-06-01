@@ -55,7 +55,7 @@
 
         /* ---- three architectures ---- */
         .cols { display:flex; gap:1.2rem; align-items:stretch; justify-content:center; margin-top:.8em; }
-        .col  { flex:1; border:1px solid var(--outline); border-radius:14px; padding:1rem .9rem .5rem; background:var(--white); }
+        .col  { flex:1; border:1px solid var(--outline); border-radius:14px; padding:1.5rem 1.1rem 1.8rem; background:var(--white); }
         .col h3 { margin:0; font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:.7em; text-transform:uppercase; letter-spacing:.04em; }
         .col .tag { font-size:.5em; color:var(--muted); margin-bottom:.4em; }
         .col.ssr   h3 { color: var(--ink); }
@@ -67,7 +67,7 @@
             min-height:2.6em; display:flex; flex-direction:column; align-items:center; justify-content:center; }
         .diag .node .ns { display:block; font-size:.82em; color:var(--muted); }
         .diag .wire { display:flex; gap:1.4em; font-size:.46em; color:var(--muted); }
-        .verdict { display:grid; grid-template-columns:auto auto; column-gap:.7em; row-gap:.6em;
+        .verdict { display:grid; grid-template-columns:auto auto; column-gap:2em; row-gap:.6em;
             width:fit-content; margin:1em auto 0; font-size:.56em; }
         .verdict .vk { text-align:left; color:var(--muted); }
         .verdict .vv { text-align:left; color:var(--ink); font-weight:600; }
@@ -238,8 +238,8 @@
                         <div class="node fragment" data-fragment-index="3">Server</div>
                     </div>
                     <div class="verdict fragment" data-fragment-index="4">
-                        <span class="vk">Logic</span><span class="vv">server ✅</span>
-                        <span class="vk">UX</span><span class="vv">full reloads ❌</span>
+                        <span class="vk">Logic</span><span class="vv">✅ server</span>
+                        <span class="vk">UX</span><span class="vv">❌ full reloads</span>
                     </div>
                 </div>
                 <div class="col spa">
@@ -254,8 +254,8 @@
                         <div class="node fragment" data-fragment-index="7">Server<span class="ns">JSON API</span></div>
                     </div>
                     <div class="verdict fragment" data-fragment-index="8">
-                        <span class="vk">Logic</span><span class="vv"><b>both sides</b> 😱</span>
-                        <span class="vk">UX</span><span class="vv">great ✅</span>
+                        <span class="vk">Logic</span><span class="vv">😱 <b>both sides</b></span>
+                        <span class="vk">UX</span><span class="vv">✅ great</span>
                     </div>
                 </div>
                 <div class="col alpine">
@@ -270,8 +270,8 @@
                         <div class="node fragment" data-fragment-index="11">Server</div>
                     </div>
                     <div class="verdict fragment" data-fragment-index="12">
-                        <span class="vk">Logic</span><span class="vv">server ✅</span>
-                        <span class="vk">UX</span><span class="vv">great ✅</span>
+                        <span class="vk">Logic</span><span class="vv">✅ server</span>
+                        <span class="vk">UX</span><span class="vv">✅ great</span>
                     </div>
                 </div>
             </div>
