@@ -346,8 +346,8 @@
                         <div class="fragment" data-fragment-index="3">
                             <div class="dt-sec">Response <span class="ty">text/html</span></div>
                             <div class="dt-mono">&lt;ul id="notes"&gt;
-  &lt;li&gt;Chase signature&lt;/li&gt;
-  &lt;li&gt;Pay deposit&lt;/li&gt;
+  &lt;li&gt;Called the client&lt;/li&gt;
+  &lt;li&gt;Sent the quote&lt;/li&gt;
 &lt;/ul&gt;</div>
                         </div>
                     </div>
@@ -356,7 +356,7 @@
             <div class="result fragment" data-fragment-index="4">
                 <div class="result-card">
                     <div class="result-hd">✓ #notes swapped in place — no reload</div>
-                    <ul><li>Chase signature</li><li>Pay deposit</li></ul>
+                    <ul><li>Called the client</li><li>Sent the quote</li></ul>
                 </div>
             </div>
             <aside class="notes">Same form, one attribute: x-target="notes". On submit (click) Alpine fires a real AJAX request — POST, with the X-Alpine-Request header, and the response is text/html: just the #notes fragment, not JSON, not the whole page. (click) Alpine reads it, finds #notes, and (click) swaps that element in place. No reload, no lost scroll, no flicker.</aside>
