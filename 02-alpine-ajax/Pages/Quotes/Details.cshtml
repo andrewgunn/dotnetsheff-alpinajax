@@ -33,12 +33,12 @@
                     <li id="note-@note.Id" class="rounded-md border border-slate-200 p-3">
                         @if (Model.EditNoteId == note.Id)
                         {
-                            <form method="post" asp-page-handler="EditNote" asp-route-id="@Model.Quote.Id" asp-route-noteId="@note.Id" class="space-y-2">
-                                <textarea name="Input.Body" rows="2" class="w-full rounded-md border border-slate-300 p-2 text-sm">@note.Body</textarea>
+                            <form method="post" asp-page-handler="EditNote" asp-route-id="@Model.Quote.Id" asp-route-noteId="@note.Id" x-target="note-@note.Id" class="space-y-2">
+                                <textarea name="Input.Body" rows="2" x-autofocus class="w-full rounded-md border border-slate-300 p-2 text-sm">@note.Body</textarea>
                                 <span asp-validation-for="Input.Body" class="block text-sm text-red-600"></span>
                                 <div class="flex gap-2">
                                     <button type="submit" class="rounded-md bg-blue-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-blue-700">Save</button>
-                                    <a href="/Quotes/@Model.Quote.Id" class="rounded-md px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100">Cancel</a>
+                                    <a href="/Quotes/@Model.Quote.Id" x-target="note-@note.Id" class="rounded-md px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100">Cancel</a>
                                 </div>
                             </form>
                         }
@@ -50,7 +50,7 @@
                                     <p class="mt-1 text-xs text-slate-400">@note.CreatedAt.ToString("d MMM, HH:mm")</p>
                                 </div>
                                 <div class="flex shrink-0 gap-2 text-xs">
-                                    <a href="/Quotes/@Model.Quote.Id?editNote=@note.Id" class="text-blue-600 hover:underline">Edit</a>
+                                    <a href="/Quotes/@Model.Quote.Id?editNote=@note.Id" x-target="note-@note.Id" class="text-blue-600 hover:underline">Edit</a>
                                     <form method="post" asp-page-handler="DeleteNote" asp-route-id="@Model.Quote.Id" asp-route-noteId="@note.Id" x-target="notes">
                                         <button type="submit" class="text-red-600 hover:underline">Delete</button>
                                     </form>
