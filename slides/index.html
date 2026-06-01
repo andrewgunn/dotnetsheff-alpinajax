@@ -61,7 +61,12 @@
         .col.ssr   h3 { color: var(--ink); }
         .col.spa   h3 { color: var(--danger); }
         .col.alpine h3 { color: var(--success); }
-        .col pre.mermaid { box-shadow:none; background:transparent; font-size:.55em; margin:.3em 0; display:flex; justify-content:center; }
+        .diag { display:flex; flex-direction:column; align-items:center; gap:.55em; margin:1em 0 .4em; }
+        .diag .node { background:var(--cream-dim); border:1px solid var(--outline); border-radius:9px;
+            padding:.5em .9em; font-size:.6em; text-align:center; min-width:60%; }
+        .diag .node .ns { display:block; font-size:.82em; color:var(--muted); }
+        .diag .wire { display:flex; gap:1.1em; font-size:.46em; color:var(--muted); }
+        .diag .down { font-size:.5em; color:var(--plum); line-height:1; }
         .verdict { font-size:.46em; color:var(--muted); line-height:1.6; margin-top:.4em; }
         .verdict b { color:var(--ink); }
 
@@ -84,12 +89,30 @@
         .avatar-name { font-weight:800; font-size:1.05em; margin-bottom:1.2em; }
         .title-koala { height:34px; opacity:.9; }
 
+        /* ---- meme (Drake) ---- */
+        .meme-slide .drake { position:relative; display:inline-block; }
+        .meme-slide .drake img { height:610px; border-radius:16px; display:block; box-shadow:0 8px 30px rgba(20,23,27,.2); }
+        .meme-slide .dk { position:absolute; right:4%; width:43%; text-align:left;
+            font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:25px; line-height:1.3; color:#14171B; }
+        .meme-slide .dk-top { top:13%; }
+        .meme-slide .dk-bot { top:63%; }
+        .meme-slide .dk-bot code { font-family:ui-monospace,monospace; background:var(--plum-soft); color:var(--plum-ink);
+            border-radius:6px; padding:.1em .35em; font-size:.95em; }
+
         /* ---- how-it-works: two-column markup + DevTools mock ---- */
         .hiw h2 { margin-bottom:1.1em; }
         .hiw-grid { display:grid; grid-template-columns:1fr auto 1fr; gap:1.4em; align-items:center; width:96%; margin:0 auto; }
-        .hiw-grid .cap { text-align:center; margin:0 0 .7em; }
+        .hiw-grid .cap { text-align:center; margin:0 0 .5em; }
+        .hiw-grid .aftercap { margin-top:.9em; }
         .hiw-grid pre.code { width:100%; margin:0; }
-        .hiw-grid pre.code code { font-size:.72em; line-height:1.7; padding:1.1em 1.3em; }
+        .hiw-grid pre.code code { font-size:.58em; line-height:1.6; padding:.9em 1.1em; }
+        .result { display:flex; justify-content:center; margin-top:1.3em; }
+        .result-card { background:var(--white); border:1px solid var(--outline); border-radius:12px;
+            padding:.6em 1.4em; box-shadow:0 2px 12px rgba(20,23,27,.07); }
+        .result-hd { font-size:.5em; color:var(--success); font-weight:700; margin-bottom:.35em; letter-spacing:.02em; }
+        .result-card ul { list-style:none; margin:0; padding:0; font-size:.6em; text-align:left; }
+        .result-card li { padding:.12em 0; }
+        .result-card li::before { content:'• '; color:var(--plum); }
         .arrows { text-align:center; color:var(--plum); font-family:ui-monospace,monospace; }
         .arrows .a  { font-size:2.1em; line-height:1; }
         .arrows .al { font-size:.4em; color:var(--muted); margin:.1em 0 .8em; letter-spacing:.03em; }
@@ -130,7 +153,7 @@
         <section data-auto-animate>
             <h1 data-id="t">SPA vibes,<br><span class="plum">server</span> brains</h1>
             <p class="lead muted">SPA-feel apps with Razor Pages &amp; Alpine AJAX</p>
-            <img class="avatar" src="lib/andrew-gunn.jpeg" alt="Andrew Gunn">
+            <img class="avatar" src="lib/ag.webp" alt="Andrew Gunn">
             <p class="avatar-name">Andrew Gunn</p>
             <img class="title-koala" src="lib/koala-logo.png" alt="koala">
             <aside class="notes">
@@ -187,31 +210,33 @@
                 <div class="col ssr fragment">
                     <h3>Classic SSR</h3>
                     <div class="tag">HTML over the wire</div>
-                    <pre class="mermaid">
-graph TD
-  B[Browser] -- request --> S[Server]
-  S -- full HTML page --> B
-                    </pre>
+                    <div class="diag">
+                        <div class="node">Browser</div>
+                        <div class="wire"><span>request ↓</span><span>↑ full HTML</span></div>
+                        <div class="node">Server</div>
+                    </div>
                     <p class="verdict">Logic: server ✅<br>UX: full reloads ❌</p>
                 </div>
                 <div class="col spa fragment">
                     <h3>SPA</h3>
                     <div class="tag">JSON over the wire</div>
-                    <pre class="mermaid">
-graph TD
-  B["Browser<br/>state, routing, logic"] -- fetch --> A[JSON API]
-  A --> DB[Server]
-                    </pre>
+                    <div class="diag">
+                        <div class="node">Browser<span class="ns">state, routing, logic</span></div>
+                        <div class="down">↓ fetch</div>
+                        <div class="node">JSON API</div>
+                        <div class="down">↓</div>
+                        <div class="node">Server</div>
+                    </div>
                     <p class="verdict">Logic: <b>both sides</b> 😱<br>UX: great ✅</p>
                 </div>
                 <div class="col alpine fragment">
                     <h3>Alpine AJAX</h3>
                     <div class="tag">HTML fragments</div>
-                    <pre class="mermaid">
-graph TD
-  B[Browser] -- request --> S[Server]
-  S -- HTML fragment --> B
-                    </pre>
+                    <div class="diag">
+                        <div class="node">Browser</div>
+                        <div class="wire"><span>request ↓</span><span>↑ HTML fragment</span></div>
+                        <div class="node">Server</div>
+                    </div>
                     <p class="verdict">Logic: server ✅<br>UX: great ✅</p>
                 </div>
             </div>
@@ -225,16 +250,17 @@ graph TD
             </aside>
         </section>
 
-        <!-- 4. THESIS — the pitch, before the examples -->
-        <section data-auto-animate>
-            <h2 data-id="t">The pitch</h2>
-            <p class="lead">Logic on the <span class="plum">server</span>.</p>
-            <p class="lead">SPA feel on the client.</p>
+        <!-- 4. THE PITCH — as a meme, before the examples -->
+        <section class="meme-slide">
+            <div class="drake">
+                <img src="lib/drake.jpg" alt="Drake meme">
+                <div class="dk dk-top">JSON API + client state + a build step</div>
+                <div class="dk dk-bot"><code>x-target="notes"</code></div>
+            </div>
             <aside class="notes">
-                This is the whole argument. The server is the best place for your logic — your data, auth and rules
-                already live there. So send HTML, the browser's native format, not JSON you have to re-assemble on the
-                client. And you keep the SPA feel with a handful of attributes, not a framework: no build step, no
-                client state to sync, no second codebase.
+                The pitch, in one image. Option one — a JSON API, client-side state, a build pipeline: the whole SPA
+                stack, just to update part of a page. Option two — add x-target to a form. Logic stays on the server,
+                the UX still feels instant. The server is the best place for your logic; send HTML, not JSON.
             </aside>
         </section>
 
@@ -243,30 +269,43 @@ graph TD
             <h2>So how does it work?</h2>
             <div class="hiw-grid">
                 <div class="hiw-left">
-                    <p class="cap">Your markup — add one attribute</p>
+                    <p class="cap">Before — full reload</p>
+                    <pre class="code"><code>&lt;form action="/notes" method="post"&gt;
+  &lt;textarea name="Body"&gt;&lt;/textarea&gt;
+&lt;/form&gt;</code></pre>
+                    <p class="cap aftercap">After — add one attribute</p>
                     <pre class="code"><code>&lt;form action="/notes" method="post"
       <span class="add">x-target="notes"</span>&gt;
   &lt;textarea name="Body"&gt;&lt;/textarea&gt;
 &lt;/form&gt;</code></pre>
                 </div>
 
-                <div class="arrows fragment">
-                    <div class="a">&rarr;</div><div class="al">request</div>
-                    <div class="a">&larr;</div><div class="al">#notes HTML</div>
+                <div class="arrows">
+                    <div class="fragment" data-fragment-index="1"><div class="a">&rarr;</div><div class="al">request</div></div>
+                    <div class="fragment" data-fragment-index="3"><div class="a">&larr;</div><div class="al">#notes HTML</div></div>
                 </div>
 
-                <div class="hiw-right fragment">
+                <div class="hiw-right fragment" data-fragment-index="2">
                     <div class="devtools">
                         <div class="dt-bar"><i class="d r"></i><i class="d y"></i><i class="d g"></i><span>Network</span></div>
                         <div class="dt-row"><b class="verb">POST</b> /notes <b class="ok">200</b> <span class="ty">fetch</span></div>
                         <div class="dt-sec">Request Headers</div>
                         <div class="dt-mono"><span class="hl">X-Alpine-Request: true</span></div>
-                        <div class="dt-sec">Response <span class="ty">text/html</span></div>
-                        <div class="dt-mono">&lt;ul id="notes"&gt;
+                        <div class="fragment" data-fragment-index="3">
+                            <div class="dt-sec">Response <span class="ty">text/html</span></div>
+                            <div class="dt-mono">&lt;ul id="notes"&gt;
   &lt;li&gt;Chase signature&lt;/li&gt;
   &lt;li&gt;Pay deposit&lt;/li&gt;
 &lt;/ul&gt;</div>
+                        </div>
                     </div>
+                </div>
+            </div>
+
+            <div class="result fragment" data-fragment-index="4">
+                <div class="result-card">
+                    <div class="result-hd">✓ #notes swapped in place — no reload</div>
+                    <ul><li>Chase signature</li><li>Pay deposit</li></ul>
                 </div>
             </div>
 
@@ -291,29 +330,14 @@ graph TD
 
     <!-- subtle koala + name on every slide -->
     <div class="brand-footer">
-        <img src="lib/koala-logo.png" alt="koala">
         <span class="who"><b>Andrew Gunn</b></span>
+        <img src="lib/koala-logo.png" alt="koala">
     </div>
 </div>
 
 <script src="lib/reveal.js"></script>
 <script src="lib/notes.js"></script>
-<script src="lib/mermaid.min.js"></script>
 <script>
-    mermaid.initialize({
-        startOnLoad: true,
-        securityLevel: 'loose',
-        theme: 'base',
-        themeVariables: {
-            fontFamily: "'Plus Jakarta Sans', sans-serif",
-            primaryColor: '#FFFFFF',
-            primaryBorderColor: '#D9CFBC',
-            primaryTextColor: '#14171B',
-            lineColor: '#6B3D5A',
-            secondaryColor: '#F1ECE2',
-            tertiaryColor: '#F7F3EC'
-        }
-    });
     Reveal.initialize({ hash: true, transition: 'slide', controls: false, plugins: [RevealNotes] });
 
     // Hide the koala/name footer on the title slide only (it carries its own koala mark).
