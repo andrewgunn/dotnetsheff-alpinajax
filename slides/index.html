@@ -9,20 +9,87 @@
     <link rel="stylesheet" href="lib/white.css">
 
     <style>
-        :root { --r-main-font: ui-sans-serif, system-ui, sans-serif; }
-        .reveal h1, .reveal h2 { letter-spacing: -0.02em; }
-        .reveal .muted { color: #64748b; }
-        .reveal .accent { color: #2563eb; }
-        .reveal section { font-size: 32px; }
-        .cols { display: flex; gap: 1.2rem; align-items: stretch; justify-content: center; }
-        .col { flex: 1; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1rem 1rem 0.4rem; background: #fff; }
-        .col h3 { margin: 0 0 0.2rem; font-size: 0.62em; text-transform: uppercase; letter-spacing: 0.05em; }
-        .col .tag { font-size: 0.5em; color: #64748b; }
-        .col.bad h3 { color: #dc2626; }
-        .col.good h3 { color: #16a34a; }
-        .reveal pre.mermaid { box-shadow: none; background: transparent; font-size: 0.5em; }
-        .reveal .lead { font-size: 1.3em; }
-        .kbd { font-size: 0.45em; color: #94a3b8; }
+        /* ---- vendored koala fonts ---- */
+        @font-face { font-family:'Plus Jakarta Sans'; font-weight:400; font-display:swap; src:url('lib/fonts/pjs-400.woff2') format('woff2'); }
+        @font-face { font-family:'Plus Jakarta Sans'; font-weight:600; font-display:swap; src:url('lib/fonts/pjs-600.woff2') format('woff2'); }
+        @font-face { font-family:'Plus Jakarta Sans'; font-weight:800; font-display:swap; src:url('lib/fonts/pjs-800.woff2') format('woff2'); }
+        @font-face { font-family:'Fraunces'; font-weight:600; font-display:swap; src:url('lib/fonts/fraunces-600.woff2') format('woff2'); }
+        @font-face { font-family:'Fraunces'; font-weight:900; font-display:swap; src:url('lib/fonts/fraunces-900.woff2') format('woff2'); }
+
+        /* ---- koala palette ---- */
+        :root {
+            --cream:#F7F3EC; --cream-dim:#F1ECE2; --white:#FFFFFF;
+            --ink:#14171B; --muted:#6E7682; --hint:#9FA5AE;
+            --plum:#6B3D5A; --plum-soft:#ECDBE5; --plum-ink:#44243A;
+            --outline:#D9CFBC; --outline-2:#E8E1D3;
+            --success:#5B8F6E; --danger:#C0413A; --amber:#C4861F; --info:#3B6F8C;
+        }
+
+        .reveal-viewport { background: var(--cream); }
+        .reveal { font-family:'Plus Jakarta Sans', system-ui, sans-serif; color: var(--ink); font-size: 30px; }
+        .reveal h1, .reveal h2 { font-family:'Fraunces', Georgia, serif; font-weight:900; color: var(--ink); letter-spacing:-0.01em; text-transform:none; }
+        .reveal h1 { font-size: 2.1em; }
+        .reveal h2 { font-size: 1.5em; margin-bottom:.1em; }
+        .reveal .muted { color: var(--muted); }
+        .reveal .plum  { color: var(--plum); }
+        .reveal strong { color: var(--plum-ink); }
+        .reveal .sub { color: var(--muted); font-size: .9em; margin-top:0; }
+        .reveal .lead { font-size: 1.25em; line-height:1.5; }
+
+        /* ---- timeline ---- */
+        .timeline { position: relative; margin-top: 1.4em; }
+        .timeline .axis { position:absolute; left:5%; right:5%; top:60px; height:3px;
+            background: linear-gradient(90deg, var(--plum), var(--amber), var(--danger), var(--success)); border-radius:2px; }
+        .timeline .axis::after { content:''; position:absolute; right:-4px; top:-6px;
+            border-left:14px solid var(--success); border-top:8px solid transparent; border-bottom:8px solid transparent; }
+        .eras { display:flex; gap:1.6%; padding:0 1%; }
+        .era  { flex:1; text-align:center; }
+        .era .year { font-family:'Fraunces',serif; font-weight:900; font-size:.95em; height:44px; line-height:44px; color:var(--c); }
+        .era .rail { height:32px; position:relative; }
+        .era .dot  { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+            width:18px; height:18px; border-radius:50%; background:var(--c); border:4px solid var(--cream); }
+        .era .card { background:var(--white); border:1px solid var(--outline); border-top:4px solid var(--c);
+            border-radius:12px; padding:.7em .6em; min-height:5.4em; }
+        .era .label { font-weight:800; font-size:.72em; line-height:1.2; }
+        .era .desc  { color:var(--muted); font-size:.6em; margin-top:.5em; line-height:1.3; }
+
+        /* ---- three architectures ---- */
+        .cols { display:flex; gap:1.2rem; align-items:stretch; justify-content:center; margin-top:.8em; }
+        .col  { flex:1; border:1px solid var(--outline); border-radius:14px; padding:1rem .9rem .5rem; background:var(--white); }
+        .col h3 { margin:0; font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:.7em; text-transform:uppercase; letter-spacing:.04em; }
+        .col .tag { font-size:.5em; color:var(--muted); margin-bottom:.4em; }
+        .col.ssr   h3 { color: var(--ink); }
+        .col.spa   h3 { color: var(--danger); }
+        .col.alpine h3 { color: var(--success); }
+        .col pre.mermaid { box-shadow:none; background:transparent; font-size:.5em; margin:.3em 0; }
+        .verdict { font-size:.46em; color:var(--muted); line-height:1.6; margin-top:.4em; }
+        .verdict b { color:var(--ink); }
+
+        /* ---- code (how it works) ---- */
+        .reveal pre.code { width:88%; margin:.5em auto; box-shadow:0 1px 0 var(--outline);
+            border:1px solid var(--outline); border-radius:12px; background:var(--white); }
+        .reveal pre.code code { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.5em; line-height:1.5;
+            display:block; padding:.9em 1.1em; color:var(--ink); white-space:pre; }
+        .reveal .add { background:var(--plum-soft); color:var(--plum-ink); border-radius:4px; padding:0 .15em; font-weight:700; }
+        .reveal .cap { font-size:.62em; color:var(--muted); margin:.1em 0 .4em; font-weight:600; letter-spacing:.03em; }
+        .flow { font-size:.66em; color:var(--ink); line-height:1.7; margin-top:.3em; }
+        .flow .step { color:var(--plum); font-weight:800; }
+
+        /* ---- chips ---- */
+        .chips { margin-top:1.4em; display:flex; gap:.5em; justify-content:center; flex-wrap:wrap; }
+        .chips span { font-family:ui-monospace,monospace; font-size:.5em; background:var(--plum-soft); color:var(--plum-ink);
+            border-radius:999px; padding:.35em .8em; }
+        .byline { font-weight:800; font-size:1.05em; margin-top:1.2em; }
+        .venue  { color:var(--plum); font-weight:600; letter-spacing:.02em; }
+
+        /* ---- subtle persistent koala + name footer (every slide) ---- */
+        .brand-footer { position:fixed; bottom:18px; left:0; right:0; z-index:30;
+            display:flex; align-items:center; justify-content:space-between;
+            padding:0 30px; pointer-events:none; opacity:.6; }
+        .brand-footer img { height:22px; }
+        .brand-footer .who { font-family:'Plus Jakarta Sans',sans-serif; font-size:13px; color:var(--muted); }
+        .brand-footer .who b { color:var(--ink); font-weight:700; }
+        .reveal .progress { color: var(--plum); }
     </style>
 </head>
 <body>
@@ -31,40 +98,50 @@
 
         <!-- 1. TITLE -->
         <section data-auto-animate>
-            <h1 data-id="t">SPA vibes,<br><span class="accent">server</span> brains</h1>
-            <p class="lead muted">Building SPA-feel apps with Razor Pages + Alpine AJAX</p>
-            <p class="muted" style="margin-top:2rem;">dotnetsheff · Andrew Gunn</p>
-            <aside class="notes">
-                We're going to build a CRUD app that feels like an SPA, but the logic
-                never leaves the server. First ~8 min: how we got here. Then we build it live.
-            </aside>
+            <h1 data-id="t">SPA vibes,<br><span class="plum">server</span> brains</h1>
+            <p class="lead muted">SPA-feel apps with Razor Pages &amp; Alpine AJAX</p>
+            <p class="byline">Andrew Gunn</p>
+            <p class="venue">dotnetsheff</p>
+            <aside class="notes">CRUD app that feels like an SPA, logic never leaves the server. ~8 min history, then build it live.</aside>
         </section>
 
-        <!-- 2. TIMELINE -->
+        <!-- 2. TIMELINE (CSS, per-year fragments) -->
         <section>
             <h2>30 years, one full circle</h2>
-            <pre class="mermaid">
-timeline
-    title From server HTML, to the client, and back
-    1996 : Classic ASP : Server renders HTML
-    2002 : ASP.NET Web Forms : Postbacks &amp; ViewState
-    2006 : jQuery / Underscore / CoffeeScript : Sprinkles of JS
-    2013 : Angular / React : The SPA era — logic moves to the client
-    2020 : htmx / Alpine AJAX : HTML over the wire, again
-            </pre>
-            <aside class="notes">
-                ASP and Web Forms: server rendered everything. Then jQuery let us
-                sprinkle behaviour. Then SPAs swallowed the world — and we moved all
-                the logic to the browser. Alpine AJAX is the pendulum swinging back:
-                keep the snappy UX, put the logic back where it belongs.
-            </aside>
+            <p class="sub">From server HTML, to the client, and back</p>
+            <div class="timeline">
+                <div class="axis"></div>
+                <div class="eras">
+                    <div class="era fragment" style="--c:var(--plum)">
+                        <div class="year">1996</div><div class="rail"><span class="dot"></span></div>
+                        <div class="card"><div class="label">Classic ASP</div><div class="desc">Server renders the HTML</div></div>
+                    </div>
+                    <div class="era fragment" style="--c:var(--plum)">
+                        <div class="year">2002</div><div class="rail"><span class="dot"></span></div>
+                        <div class="card"><div class="label">ASP.NET Web Forms</div><div class="desc">Postbacks &amp; ViewState</div></div>
+                    </div>
+                    <div class="era fragment" style="--c:var(--amber)">
+                        <div class="year">2006</div><div class="rail"><span class="dot"></span></div>
+                        <div class="card"><div class="label">jQuery, Underscore, CoffeeScript</div><div class="desc">Sprinkles of JS</div></div>
+                    </div>
+                    <div class="era fragment" style="--c:var(--danger)">
+                        <div class="year">2013</div><div class="rail"><span class="dot"></span></div>
+                        <div class="card"><div class="label">Angular, React</div><div class="desc">The SPA era — logic moves to the client</div></div>
+                    </div>
+                    <div class="era fragment" style="--c:var(--success)">
+                        <div class="year">2020</div><div class="rail"><span class="dot"></span></div>
+                        <div class="card"><div class="label">htmx, Alpine AJAX</div><div class="desc">HTML over the wire, again</div></div>
+                    </div>
+                </div>
+            </div>
+            <aside class="notes">ASP &amp; Web Forms rendered on the server. jQuery let us sprinkle. SPAs swallowed the world and moved all logic to the browser. Alpine AJAX swings it back: keep the UX, put the logic home.</aside>
         </section>
 
-        <!-- 3. THREE ARCHITECTURES -->
+        <!-- 3. WHERE DOES LOGIC LIVE (per-column fragments) -->
         <section>
             <h2>Where does the logic live?</h2>
             <div class="cols">
-                <div class="col">
+                <div class="col ssr fragment">
                     <h3>Classic SSR</h3>
                     <div class="tag">HTML over the wire</div>
                     <pre class="mermaid">
@@ -72,19 +149,19 @@ graph TD
   B[Browser] -- request --> S[Server]
   S -- full HTML page --> B
                     </pre>
-                    <p class="kbd">Logic: server ✅ · UX: full reloads ❌</p>
+                    <p class="verdict">Logic: server ✅<br>UX: full reloads ❌</p>
                 </div>
-                <div class="col bad">
+                <div class="col spa fragment">
                     <h3>SPA</h3>
                     <div class="tag">JSON over the wire</div>
                     <pre class="mermaid">
 graph TD
-  B["Browser<br/>(state, routing, logic)"] -- fetch --> A[JSON API]
+  B["Browser<br/>state, routing, logic"] -- fetch --> A[JSON API]
   A --> DB[Server]
                     </pre>
-                    <p class="kbd">Logic: <b>both sides</b> 😱 · UX: great ✅</p>
+                    <p class="verdict">Logic: <b>both sides</b> 😱<br>UX: great ✅</p>
                 </div>
-                <div class="col good">
+                <div class="col alpine fragment">
                     <h3>Alpine AJAX</h3>
                     <div class="tag">HTML fragments</div>
                     <pre class="mermaid">
@@ -92,42 +169,61 @@ graph TD
   B[Browser] -- request --> S[Server]
   S -- HTML fragment --> B
                     </pre>
-                    <p class="kbd">Logic: server ✅ · UX: great ✅</p>
+                    <p class="verdict">Logic: server ✅<br>UX: great ✅</p>
                 </div>
             </div>
-            <aside class="notes">
-                SSR: logic on the server, but full reloads. SPA: gorgeous UX, but now
-                you maintain logic, validation and routing TWICE — and a JSON API in
-                between. Alpine AJAX: the server still renders HTML; Alpine swaps in
-                just the bits that changed. One codebase, one source of truth.
-            </aside>
+            <aside class="notes">SSR: logic on the server, full reloads. SPA: lovely UX but logic, validation and routing live TWICE, with a JSON API between. Alpine: server renders HTML, Alpine swaps the changed bits. One codebase, one source of truth.</aside>
         </section>
 
-        <!-- 4. THESIS -->
+        <!-- 4. HOW ALPINE AJAX WORKS (NEW — before/after) -->
+        <section>
+            <h2>So how does it work?</h2>
+            <p class="cap">BEFORE — a plain Razor Pages form (full reload)</p>
+            <pre class="code"><code>&lt;form method="post" action="/notes"&gt;
+  &lt;textarea name="Body"&gt;&lt;/textarea&gt;
+&lt;/form&gt;</code></pre>
+
+            <div class="fragment">
+                <p class="cap">AFTER — add one attribute</p>
+                <pre class="code"><code>&lt;form method="post" action="/notes" <span class="add">x-target="notes"</span>&gt;
+  &lt;textarea name="Body"&gt;&lt;/textarea&gt;
+&lt;/form&gt;</code></pre>
+            </div>
+
+            <p class="flow fragment">
+                <span class="step">1</span> Alpine intercepts the submit &nbsp;
+                <span class="step">2</span> posts &amp; reads the HTML response &nbsp;
+                <span class="step">3</span> finds <code>#notes</code> in it &nbsp;
+                <span class="step">4</span> swaps just that element in
+            </p>
+            <aside class="notes">No JSON. No client state. The server already renders the page; Alpine just plucks the element you named out of the response and swaps it. Same HTML, no full reload.</aside>
+        </section>
+
+        <!-- 5. THESIS -->
         <section data-auto-animate>
             <h2 data-id="t">The pitch</h2>
             <p class="lead">The server is the best place for your logic.</p>
-            <p class="lead muted">Send <span class="accent">HTML</span>, not JSON.</p>
+            <p class="lead muted">Send <span class="plum">HTML</span>, not JSON.</p>
             <p class="lead">Keep the SPA feel — with attributes, not a framework.</p>
-            <aside class="notes">
-                No build step. No client state to sync. No second codebase. Your
-                ModelState validation, your auth, your domain rules — all stay on the
-                server. Alpine AJAX is ~5 attributes. That's the whole API.
-            </aside>
+            <aside class="notes">No build step. No client state to sync. No second codebase. ModelState validation, auth, domain rules all stay server-side. Alpine AJAX is ~5 attributes — that's the whole API.</aside>
         </section>
 
-        <!-- 5. LET'S BUILD IT -->
+        <!-- 6. LET'S BUILD IT -->
         <section data-auto-animate>
             <h1 data-id="t">Let's build it</h1>
-            <p class="lead muted">A Razor Pages quotes app → sprinkle Alpine, one attribute at a time</p>
-            <p class="kbd" style="margin-top:2rem;">x-target · x-sync · x-merge · @ajax:before · $dispatch</p>
-            <aside class="notes">
-                Start: plain server-rendered Razor Pages, full reloads, works with no JS.
-                Then 10 small steps. If we run out of time, we just stop — every step
-                stands on its own.
-            </aside>
+            <p class="lead muted">A Razor Pages quotes app, one attribute at a time</p>
+            <div class="chips">
+                <span>x-target</span><span>x-sync</span><span>x-merge</span><span>@ajax:before</span><span>$dispatch</span>
+            </div>
+            <aside class="notes">Start: plain server-rendered Razor Pages, works with no JS. Then 10 small steps. If we run out of time we just stop — every step stands alone.</aside>
         </section>
 
+    </div>
+
+    <!-- subtle koala + name on every slide -->
+    <div class="brand-footer">
+        <img src="lib/koala-logo.png" alt="koala">
+        <span class="who"><b>Andrew Gunn</b> &nbsp;dotnetsheff</span>
     </div>
 </div>
 
@@ -135,8 +231,21 @@ graph TD
 <script src="lib/notes.js"></script>
 <script src="lib/mermaid.min.js"></script>
 <script>
-    mermaid.initialize({ startOnLoad: true, theme: 'neutral', securityLevel: 'loose' });
-    Reveal.initialize({ hash: true, transition: 'slide', plugins: [RevealNotes] });
+    mermaid.initialize({
+        startOnLoad: true,
+        securityLevel: 'loose',
+        theme: 'base',
+        themeVariables: {
+            fontFamily: "'Plus Jakarta Sans', sans-serif",
+            primaryColor: '#FFFFFF',
+            primaryBorderColor: '#D9CFBC',
+            primaryTextColor: '#14171B',
+            lineColor: '#6B3D5A',
+            secondaryColor: '#F1ECE2',
+            tertiaryColor: '#F7F3EC'
+        }
+    });
+    Reveal.initialize({ hash: true, transition: 'slide', controls: false, plugins: [RevealNotes] });
 </script>
 </body>
 </html>
