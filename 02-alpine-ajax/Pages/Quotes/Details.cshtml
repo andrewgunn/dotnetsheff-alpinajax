@@ -66,7 +66,7 @@
                 <p class="text-sm text-slate-400">No notes yet.</p>
             }
 
-            <form id="note-form" method="post" asp-page-handler="AddNote" asp-route-id="@Model.Quote.Id" x-target="notes" class="mt-5 space-y-2 border-t border-slate-100 pt-5">
+            <form id="note-form" method="post" asp-page-handler="AddNote" asp-route-id="@Model.Quote.Id" x-target="notes note-form" class="mt-5 space-y-2 border-t border-slate-100 pt-5">
                 <textarea asp-for="Input.Body" rows="2" placeholder="Add a note…" class="w-full rounded-md border border-slate-300 p-2 text-sm"></textarea>
                 @if (Model.EditNoteId is null)
                 {
