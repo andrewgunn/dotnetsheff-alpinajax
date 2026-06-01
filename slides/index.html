@@ -452,7 +452,7 @@
 <script src="lib/reveal.js"></script>
 <script src="lib/notes.js"></script>
 <script>
-    Reveal.initialize({ hash: true, transition: 'slide', controls: false, plugins: [RevealNotes] });
+    Reveal.initialize({ hash: true, fragmentInURL: true, transition: 'slide', controls: false, plugins: [RevealNotes] });
 
     // Hide the koala/name footer on the title slide only (it carries its own koala mark).
     const footer = document.querySelector('.brand-footer');
@@ -460,10 +460,19 @@
     Reveal.on('ready', toggleFooter);
     Reveal.on('slidechanged', toggleFooter);
 
-    // Update the URL hash instantly on navigation (reveal's own write is debounced).
-    const writeHash = () => { const i = Reveal.getIndices(); history.replaceState(null, '', '#/' + i.h + (i.v ? '/' + i.v : '')); };
+    // Update the URL hash instantly on navigation AND on each fragment step
+    // (reveal's own write is debounced, and fragments otherwise don't move it).
+    const writeHash = () => {
+        const i = Reveal.getIndices();
+        let hash = '/' + i.h;
+        if (typeof i.f === 'number' && i.f >= 0) hash += '/' + (i.v || 0) + '/' + i.f;
+        else if (i.v) hash += '/' + i.v;
+        history.replaceState(null, '', '#' + hash);
+    };
     Reveal.on('ready', writeHash);
     Reveal.on('slidechanged', writeHash);
+    Reveal.on('fragmentshown', writeHash);
+    Reveal.on('fragmenthidden', writeHash);
 </script>
 </body>
 </html>
