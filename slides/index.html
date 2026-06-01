@@ -355,8 +355,7 @@
             </div>
             <div class="result fragment" data-fragment-index="4">
                 <div class="result-card">
-                    <div class="result-hd">✓ #notes swapped in place — no reload</div>
-                    <ul><li>Called the client</li><li>Sent the quote</li></ul>
+                    <div class="result-hd" style="margin:0;">✓ #notes swapped in place — no reload</div>
                 </div>
             </div>
             <aside class="notes">Same form, one attribute: x-target="notes". On submit (click) Alpine fires a real AJAX request — POST, with the X-Alpine-Request header, and the response is text/html: just the #notes fragment, not JSON, not the whole page. (click) Alpine reads it, finds #notes, and (click) swaps that element in place. No reload, no lost scroll, no flicker.</aside>
@@ -365,8 +364,8 @@
         <!-- 6. LET'S BUILD IT -->
         <section class="meme-slide">
             <div class="anakin">
-                <img src="lib/anakin.jpg" alt="Anakin: this is where the fun begins">
-                <div class="meme-cap">This is where the fun begins</div>
+                <img src="lib/rubhands.jpg" alt="rubbing hands">
+                <div class="meme-cap">Let's build it</div>
             </div>
             <aside class="notes">Enough theory — let's build it. We start with plain server-rendered Razor Pages that works with no JS, then sprinkle Alpine on, one attribute at a time. About 10 small steps; if we run out of time, we just stop — every step stands alone.</aside>
         </section>
