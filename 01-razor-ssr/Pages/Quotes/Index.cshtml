@@ -21,9 +21,9 @@
         <tbody class="divide-y divide-slate-100">
             @foreach (var quote in Model.Quotes)
             {
-                <tr x-data @@click="$event.target.closest('a') || $el.querySelector('a').click()" class="cursor-pointer hover:bg-slate-50">
+                <tr onclick="location.href='/Quotes/@quote.Id'" class="cursor-pointer hover:bg-slate-50">
                     <td class="px-4 py-3">
-                        <a href="/Quotes/@quote.Id" x-target.push="page" class="font-medium text-[#6B3D5A] hover:underline">@quote.Reference</a>
+                        <a href="/Quotes/@quote.Id" class="font-medium text-[#6B3D5A] hover:underline">@quote.Reference</a>
                     </td>
                     <td class="px-4 py-3">
                         <div>@quote.ClientName</div>
