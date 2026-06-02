@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full">
+<html lang="en" class="h-full" style="font-size:18px">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] · Quotes</title>
+    <title>@ViewData["Title"] Koala</title>
     <script src="~/lib/tailwind.js"></script>
 </head>
-<body class="h-full bg-slate-50 text-slate-800">
+<body class="h-full bg-[#F7F3EC] text-slate-800">
     <header class="border-b border-slate-200 bg-white">
         <div class="mx-auto max-w-4xl px-6 py-4">
             <a href="/Quotes"><img src="/img/koala-logo.png" alt="koala" class="h-7" /></a>
@@ -16,5 +16,9 @@
     <main class="mx-auto max-w-4xl px-6 py-8">
         @RenderBody()
     </main>
+
+    <footer class="mx-auto max-w-4xl px-6 pb-8 text-center text-xs text-slate-400">
+        <a href="https://koalatech.co.uk" class="text-[#6B3D5A] hover:underline">koalatech.co.uk</a>
+    </footer>
 </body>
 </html>

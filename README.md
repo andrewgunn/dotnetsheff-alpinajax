@@ -41,19 +41,20 @@ cd 02-alpine-ajax && dotnet run
 
 Then open the printed URL (e.g. `http://localhost:5xxx`) → it lands on `/Quotes`.
 
-## The demo arc (10 beats, ordered to drop off the end if time runs short)
+## The demo arc (11 beats, ordered to drop off the end if time runs short)
 
 ```
-CORE       1  x-target="notes"            note appears, no full reload
-           2  x-target="notes note-form"  form resets; validation just works
-           3  #count x-sync               count updates itself
-           4  delete (x-target="notes")   note removed inline
-           5  edit (?editNote, note-{id}) inline view <-> edit
-DROPPABLE  6  @ajax:before confirm()      "Delete this note?"
-           7  #notifications x-sync prepend   self-dismissing toast
-           8  #server_events + #activity  decoupled refetch via events
-           9  [aria-busy] CSS             loading state
-          10  Layout switch on X-Alpine-Request   lean fragments
+CORE       1  x-target.push="page"        list <-> detail nav, no reload, Back works
+           2  x-target="notes"            note appears, no full reload
+           3  x-target="notes note-form"  form resets; validation just works
+           4  #count x-sync               count updates itself
+           5  delete (x-target="notes")   note removed inline
+           6  edit (?editNote, note-{id}) inline view <-> edit
+DROPPABLE  7  x-on:ajax:before confirm()  "Delete this note?"
+           8  #notifications x-sync prepend   self-dismissing toast
+           9  #server_events + #activity  decoupled refetch via events
+          10  [aria-busy] CSS             loading state
+          11  Layout switch on X-Alpine-Request   lean fragments
 ```
 
 Push/pull contrast in the right column: the **count** uses `x-sync` (server
@@ -63,5 +64,5 @@ Push/pull contrast in the right column: the **count** uses `x-sync` (server
 ## Tip for the talk
 
 Do a dry-run in the browser beforehand. To make the **loading state** (beat 9)
-visible, throttle the network in DevTools (Network → Slow 3G) — local requests
+visible, throttle the network in DevTools (Network → Slow 3G, beat 10) — local requests
 are otherwise instant.
