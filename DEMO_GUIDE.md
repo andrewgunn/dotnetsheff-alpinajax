@@ -103,13 +103,19 @@ the row's click to its link, and give the link `x-target.push="page"`.
 ```
 → becomes:
 
-<pre>&lt;tr <b style="background:#ECDBE5;color:#44243A;border-radius:4px;padding:0 .2em">@@click="$event.target.closest('a') || $el.querySelector('a').click()"</b> class="cursor-pointer hover:bg-slate-50"&gt;
+<pre>&lt;tr <b style="background:#ECDBE5;color:#44243A;border-radius:4px;padding:0 .2em">x-data</b> <b style="background:#ECDBE5;color:#44243A;border-radius:4px;padding:0 .2em">@@click="$event.target.closest('a') || $el.querySelector('a').click()"</b> class="cursor-pointer hover:bg-slate-50"&gt;
     &lt;td class="px-4 py-3"&gt;
         &lt;a href="/Quotes/@quote.Id" <b style="background:#ECDBE5;color:#44243A;border-radius:4px;padding:0 .2em">x-target.push="page"</b> class="font-medium text-[#6B3D5A] hover:underline"&gt;@quote.Reference&lt;/a&gt;</pre>
 
 > The row's `@@click` just clicks its own link (skipping if you clicked the link
 > directly), so the **whole row** stays clickable — but now it's the link's
 > `x-target` doing AJAX, not a page reload.
+>
+> The bare `x-data` matters: Alpine only wires up directives like `@@click` on
+> elements inside an `x-data` scope. Without it the row click silently does
+> nothing on a fresh load (it'd only start working after an AJAX swap re-inits
+> the rows). The `<a x-target>` doesn't need it because `x-target` bootstraps its
+> own Alpine root.
 
 **(b)** `Pages/Quotes/Details.cshtml` — the **← All quotes** back link (top of page):
 

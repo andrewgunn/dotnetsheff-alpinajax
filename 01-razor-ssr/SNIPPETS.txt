@@ -22,7 +22,7 @@ Step 1 · Boosted navigation (both pages already wrap content in <div id="page">
 
   Index.cshtml — forward the row click to its link, link gets x-target.push:
 
-    <tr @@click="$event.target.closest('a') || $el.querySelector('a').click()" class="cursor-pointer hover:bg-slate-50">
+    <tr x-data @@click="$event.target.closest('a') || $el.querySelector('a').click()" class="cursor-pointer hover:bg-slate-50">
 
     <a href="/Quotes/@quote.Id" x-target.push="page" class="font-medium text-[#6B3D5A] hover:underline">@quote.Reference</a>
 

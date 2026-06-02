@@ -40,6 +40,7 @@ public class DetailsModel(QuoteStore store) : PageModel
         if (!ModelState.IsValid) return Page();
 
         store.AddNote(quote, Input.Body!);
+        TempData["Toast"] = "Note added";
         return RedirectToPage(new { id });
     }
 
@@ -56,6 +57,7 @@ public class DetailsModel(QuoteStore store) : PageModel
         }
 
         store.EditNote(quote, noteId, Input.Body!);
+        TempData["Toast"] = "Note edited";
         return RedirectToPage(new { id });
     }
 
@@ -65,6 +67,7 @@ public class DetailsModel(QuoteStore store) : PageModel
         if (quote is null) return NotFound();
 
         store.DeleteNote(quote, noteId);
+        TempData["Toast"] = "Note deleted";
         return RedirectToPage(new { id });
     }
 }
