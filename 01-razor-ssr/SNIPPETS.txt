@@ -1,0 +1,199 @@
+SNIPPETS — copy/paste, mid-demo
+
+Bare code for each beat, nothing to read. Full talking points live in
+DEMO_GUIDE.md. Paste the whole line where a step modifies an existing
+element (replace the old one).
+
+NOTE: Razor @@ = a literal @. Exception: on a <form asp-*> tag-helper the
+ASP.NET form helper strips any attribute whose name starts with @, so the
+delete-confirm (Step 7) uses Alpine's longhand x-on: instead. Plain elements
+(<tr>, <section>, <button>) keep @@.
+
+----------------------------------------------------------------------
+
+Setup · Load Alpine — Pages/Shared/_Layout.cshtml (in <head>, after Tailwind)
+
+    @* Alpine-AJAX plugin must load BEFORE Alpine core. Both deferred. *@
+    <script defer src="~/lib/alpine-ajax.js"></script>
+    <script defer src="~/lib/alpine.js"></script>
+
+
+Step 1 · Boosted navigation (both pages already wrap content in <div id="page">)
+
+  Index.cshtml — forward the row click to its link, link gets x-target.push:
+
+    <tr @@click="$event.target.closest('a') || $el.querySelector('a').click()" class="cursor-pointer hover:bg-slate-50">
+
+    <a href="/Quotes/@quote.Id" x-target.push="page" class="font-medium text-[#6B3D5A] hover:underline">@quote.Reference</a>
+
+  Details.cshtml — the back link:
+
+    <a href="/Quotes" x-target.push="page" class="mb-4 inline-block text-sm text-[#6B3D5A] hover:underline">&larr; All quotes</a>
+
+
+Step 2 · Add note inline — Details.cshtml add-note form
+
+    <form id="note-form" method="post" asp-page-handler="AddNote" asp-route-id="@Model.Quote.Id" x-target="notes" class="mt-5 space-y-2 border-t border-slate-100 pt-5">
+
+
+Step 3 · Target the form too
+
+    x-target="notes note-form"
+
+
+Step 4 · Count updates itself — the #count div
+
+    <div id="count" x-sync class="text-3xl font-semibold text-slate-900">@Model.Quote.Notes.Count</div>
+
+
+Step 5 · Delete inline — the delete form
+
+    <form method="post" asp-page-handler="DeleteNote" asp-route-id="@Model.Quote.Id" asp-route-noteId="@note.Id" x-target="notes">
+
+
+Step 6 · Inline edit — four edits on each note (Edit is a pencil icon; add to its opening tag)
+
+  (a) Edit link opening tag:
+
+    <a href="/Quotes/@Model.Quote.Id?editNote=@note.Id" x-target="note-@note.Id" aria-label="Edit" title="Edit" class="text-[#6B3D5A] hover:text-[#44243A]">
+
+  (b) edit form:
+
+    <form method="post" asp-page-handler="EditNote" asp-route-id="@Model.Quote.Id" asp-route-noteId="@note.Id" x-target="note-@note.Id" class="space-y-2">
+
+  (c) edit textarea:
+
+    <textarea name="Input.Body" rows="2" x-autofocus class="w-full rounded-md border border-slate-300 p-2 text-sm">@note.Body</textarea>
+
+  (d) Cancel link:
+
+    <a href="/Quotes/@Model.Quote.Id" x-target="note-@note.Id" class="rounded-md px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100">Cancel</a>
+
+
+Step 7 · Confirm before delete — the delete form (note x-on:, NOT @@)
+
+    <form method="post" asp-page-handler="DeleteNote" asp-route-id="@Model.Quote.Id" asp-route-noteId="@note.Id" x-target="notes" x-on:ajax:before="confirm('Delete this note?') || $event.preventDefault()">
+
+
+Step 8 · Toasts
+
+  (a) Details.cshtml.cs — one line before each return RedirectToPage(...):
+
+    TempData["Toast"] = "Note added";    // OnPostAddNote
+    TempData["Toast"] = "Note edited";   // OnPostEditNote
+    TempData["Toast"] = "Note deleted";  // OnPostDeleteNote
+
+  (b) _Layout.cshtml — top of file (before <!DOCTYPE html>):
+
+    @{ var toast = TempData["Toast"] as string; }
+
+  Just before </body>:
+
+    @* Toasts. x-sync = updates from ANY Alpine response; prepend so new toasts
+       stack on top. The server drops a <li> in here after each mutation. *@
+    <ul id="notifications" x-sync x-merge="prepend" role="status"
+        class="pointer-events-none fixed bottom-4 right-4 z-50 flex flex-col gap-2">
+        @if (toast is not null)
+        {
+            <li x-data="{ show: false,
+                          init() { this.$nextTick(() => this.show = true); setTimeout(() => this.dismiss(), 6000) },
+                          dismiss() { this.show = false; setTimeout(() => this.$root.remove(), 500) } }"
+                x-show="show" x-transition.duration.500ms
+                class="pointer-events-auto flex items-center gap-3 rounded-md bg-slate-900 px-4 py-2 text-sm text-white shadow-lg">
+                <span>@toast</span>
+                <button @@click="dismiss" type="button" aria-label="Dismiss" class="text-slate-400 hover:text-white">&times;</button>
+            </li>
+        }
+    </ul>
+
+
+Step 9 · Server events
+
+  (a) _Layout.cshtml — just after the </ul> above:
+
+    @* Server-dispatched events. Empty on a normal load; after a mutation the
+       server fills it with an element whose x-init fires 'note:changed'. *@
+    <div id="server_events" x-sync>
+        @if (toast is not null)
+        {
+            <div x-init="$dispatch('note:changed')"></div>
+        }
+    </div>
+
+  (b) Details.cshtml — the Recent-activity <section> (listener goes here):
+
+    <section x-init @@note:changed.window="$ajax('/Quotes/@Model.Quote.Id', { target: 'activity' })"
+             class="rounded-lg border border-slate-200 bg-white p-6">
+        <h2 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-500">Recent activity</h2>
+
+
+Step 10 · Loading state — _Layout.cshtml <head>, after the Alpine scripts
+
+    @* Alpine-AJAX auto-adds aria-busy to targets during a request and disables
+       submit buttons. CSS is the only hook we need. *@
+    <style>
+        /* Skip the invisible live-region plumbing (#notifications, #server_events)
+           so they don't render a stray spinner — only real content shows loading. */
+        [aria-busy]:not(#notifications):not(#server_events) { position: relative; opacity: .6; transition: opacity .15s; }
+        [aria-busy]:not(#notifications):not(#server_events)::after {
+            content: ''; position: absolute; top: 50%; left: 50%;
+            width: 20px; height: 20px; margin: -10px 0 0 -10px;
+            border: 2px solid rgba(0,0,0,.15); border-top-color: rgba(0,0,0,.55);
+            border-radius: 50%; animation: spin .6s linear infinite;
+        }
+        @@keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+
+
+Step 11 · Lean fragments — restart `dotnet watch` after this step
+
+_ViewStart.cshtml + new layout files don't hot-reload; without a restart the
+response stays the full page.
+
+  (a) New file Pages/Shared/_LiveRegions.cshtml — move the toast + events here:
+
+    @{ var toast = TempData["Toast"] as string; }
+
+    <ul id="notifications" x-sync x-merge="prepend" role="status"
+        class="pointer-events-none fixed bottom-4 right-4 z-50 flex flex-col gap-2">
+        @if (toast is not null)
+        {
+            <li x-data="{ show: false,
+                          init() { this.$nextTick(() => this.show = true); setTimeout(() => this.dismiss(), 6000) },
+                          dismiss() { this.show = false; setTimeout(() => this.$root.remove(), 500) } }"
+                x-show="show" x-transition.duration.500ms
+                class="pointer-events-auto flex items-center gap-3 rounded-md bg-slate-900 px-4 py-2 text-sm text-white shadow-lg">
+                <span>@toast</span>
+                <button @@click="dismiss" type="button" aria-label="Dismiss" class="text-slate-400 hover:text-white">&times;</button>
+            </li>
+        }
+    </ul>
+
+    <div id="server_events" x-sync>
+        @if (toast is not null)
+        {
+            <div x-init="$dispatch('note:changed')"></div>
+        }
+    </div>
+
+  (b) _Layout.cshtml — delete the top @{ var toast = ... } line and the two
+  blocks from Steps 8 & 9, then just before </body>:
+
+    <partial name="_LiveRegions" />
+
+  (c) New file Pages/Shared/_LayoutAjax.cshtml:
+
+    @* Lean layout for Alpine-AJAX requests: no <html>/<head>, no nav — just the
+       page body plus the live regions Alpine needs to find by id. *@
+    @RenderBody()
+    <partial name="_LiveRegions" />
+
+  (d) Pages/_ViewStart.cshtml:
+
+    @{
+        Layout = Context.Request.Headers.ContainsKey("X-Alpine-Request")
+            ? "_LayoutAjax"
+            : "_Layout";
+    }
+
+  Then: stop and restart `dotnet watch`.
