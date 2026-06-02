@@ -91,7 +91,9 @@
         .avatar { width:150px; height:150px; border-radius:50%; object-fit:cover;
             border:4px solid var(--white); box-shadow:0 4px 18px rgba(20,23,27,.15); margin:1em auto .5em; }
         .avatar-name { font-weight:800; font-size:1.05em; margin-bottom:1.2em; }
-        .title-koala { height:34px; opacity:.9; }
+        .title-brand { display:flex; align-items:center; justify-content:center; gap:.45em; }
+        .title-brand img { height:40px; }
+        .title-brand span { font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:.7em; color:var(--ink); }
 
         /* ---- meme (Drake) ---- */
         .meme-slide .drake { position:relative; display:inline-block; }
@@ -152,9 +154,10 @@
         .brand-footer { position:fixed; bottom:18px; left:0; right:0; z-index:30;
             display:none; align-items:center; justify-content:space-between;
             padding:0 30px; pointer-events:none; opacity:.6; }
-        .brand-footer img { height:22px; }
         .brand-footer .who { font-family:'Plus Jakarta Sans',sans-serif; font-size:13px; color:var(--muted); }
-        .brand-footer .who b { color:var(--ink); font-weight:700; }
+        .brand-footer .brand-mark { display:inline-flex; align-items:center; gap:.4em;
+            font-family:'Plus Jakarta Sans',sans-serif; font-size:13px; font-weight:600; color:var(--ink); }
+        .brand-footer .brand-mark img { height:22px; }
         .reveal .progress { color: var(--plum); }
     </style>
 </head>
@@ -168,7 +171,7 @@
             <p class="lead muted">SPA-feel apps with .NET Razor Pages + Alpine AJAX</p>
             <img class="avatar" src="lib/ag.webp" alt="Andrew Gunn">
             <p class="avatar-name">Andrew Gunn</p>
-            <img class="title-koala" src="lib/koala-logo.png" alt="koala">
+            <div class="title-brand"><img src="lib/koala-mark.svg" alt="koala"><span>koalatech.co.uk</span></div>
             <aside class="notes">
                 <ul>
                     <li>Hook: we rebuild, in the browser, HTML the server already had</li>
@@ -444,8 +447,8 @@
 
     <!-- subtle koala + name on every slide -->
     <div class="brand-footer">
-        <span class="who"><b>Andrew Gunn</b></span>
-        <img src="lib/koala-logo.png" alt="koala">
+        <span class="who">github.com/andrewgunn/npm-uninstall-everything</span>
+        <span class="brand-mark"><img src="lib/koala-mark.svg" alt="koala">koalatech.co.uk</span>
     </div>
 </div>
 

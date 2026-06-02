@@ -6,6 +6,24 @@ have to open `02-alpine-ajax/` (that's just the backup if a step goes wrong).
 You edit **`01-razor-ssr/`** throughout. Steps are ordered most-essential →
 most-droppable: if you run low on time, just stop after any step.
 
+## Cheat sheet (at a glance)
+
+| # | Beat | The change |
+|---|------|-----------|
+| 0 | Load Alpine | two `<script>` tags in `_Layout` (plugin before core) |
+| 1 | Add note | `x-target="notes"` on the form — note appears, form keeps text |
+| 2 | + the form | `x-target="notes note-form"` — form resets, validation just works |
+| 3 | Count | `x-sync` on `#count` — updates itself |
+| 4 | Delete | `x-target="notes"` on the delete form |
+| 5 | Inline edit | `x-target="note-@note.Id"` on edit link / form / cancel + `x-autofocus` |
+| 6 | Confirm | `@@ajax:before="confirm('Delete this note?') \|\| $event.preventDefault()"` |
+| 7 | Toasts | `TempData["Toast"]` in handlers + `#notifications` (`x-sync` + `x-merge="prepend"`) |
+| 8 | Events | `#server_events` dispatcher + `#activity` listens `@@note:changed.window="$ajax(...)"` |
+| 9 | Loading | `[aria-busy]` CSS spinner (Alpine sets it on targets) |
+| 10 | Optimize | `Layout = null` (or `_LayoutAjax`) on the `X-Alpine-Request` header |
+
+Full text + talking points for every step below.
+
 ---
 
 ## Before you start

@@ -1,18 +1,17 @@
-# dotnetsheff — SPA vibes, server brains (Alpine AJAX)
+# npm uninstall everything
 
-Talk + live demo: building an SPA-feel CRUD app with **ASP.NET Razor Pages +
-[Alpine AJAX](https://alpine-ajax.js.org)** — where the logic never leaves the
-server.
+Talk + live demo (dotnetsheff): building an SPA-feel CRUD app with **ASP.NET
+Razor Pages + [Alpine AJAX](https://alpine-ajax.js.org)** — where the logic
+never leaves the server.
 
 ## What's here
 
 | Path | What it is |
 |------|------------|
-| `slides/index.html` | The ~8-min opener (reveal.js + Mermaid). Open in a browser; press `S` for speaker notes. |
+| `slides/index.html` | The ~8-min opener (reveal.js, offline). Open in a browser; press `S` for speaker notes. |
 | `01-razor-ssr/` | **Pure server-rendered Razor Pages.** The starting point we live-code from. No JS framework — add/edit/delete are full POST + redirect. |
 | `02-alpine-ajax/` | **The finished version** — *backup only.* Same app with Alpine AJAX applied; its git history has one commit per beat (`git log --oneline`). |
-| **`DEMO_GUIDE.md`** | **The live walkthrough.** Every change in order, full text inline — follow it top-to-bottom, nothing to look up elsewhere. Use this during the talk. |
-| `SNIPPETS.md` | One-glance cheat-sheet (terser than the guide). |
+| **`DEMO_GUIDE.md`** | **The live walkthrough.** A one-glance cheat-sheet table up top, then every change in order with full text inline — follow it top-to-bottom during the talk. |
 
 ## No database, no setup
 
